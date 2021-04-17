@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mingrisoft.dao.TbFileMapper" >
+  <resultMap id="BaseResultMap" type="com.mingrisoft.model.TbFile" >
+    <id column="fileid" property="fileid" jdbcType="VARCHAR" />
+    <result column="extName" property="extname" jdbcType="VARCHAR" />
+    <result column="fileType" property="filetype" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="fileName" property="filename" jdbcType="VARCHAR" />
+    <result column="fileUserName" property="fileusername" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fileid, extName, fileType, path, addtime, userid, fileName, fileUserName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_file
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mingrisoft.model.TbFile" >
+    insert into tb_file (fileid, extName, fileType, 
+      path, addtime, userid, 
+      fileName, fileUserName)
+    values (#{fileid,jdbcType=VARCHAR}, #{extname,jdbcType=VARCHAR}, #{filetype,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{userid,jdbcType=VARCHAR}, 
+      #{filename,jdbcType=VARCHAR}, #{fileusername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mingrisoft.model.TbFile" >
+    insert into tb_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileid != null" >
+        fileid,
+      </if>
+      <if test="extname != null" >
+        extName,
+      </if>
+      <if test="filetype != null" >
+        fileType,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="filename != null" >
+        fileName,
+      </if>
+      <if test="fileusername != null" >
+        fileUserName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileid != null" >
+        #{fileid,jdbcType=VARCHAR},
+      </if>
+      <if test="extname != null" >
+        #{extname,jdbcType=VARCHAR},
+      </if>
+      <if test="filetype != null" >
+        #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="fileusername != null" >
+        #{fileusername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mingrisoft.model.TbFile" >
+    update tb_file
+    <set >
+      <if test="extname != null" >
+        extName = #{extname,jdbcType=VARCHAR},
+      </if>
+      <if test="filetype != null" >
+        fileType = #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        fileName = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="fileusername != null" >
+        fileUserName = #{fileusername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mingrisoft.model.TbFile" >
+    update tb_file
+    set extName = #{extname,jdbcType=VARCHAR},
+      fileType = #{filetype,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      userid = #{userid,jdbcType=VARCHAR},
+      fileName = #{filename,jdbcType=VARCHAR},
+      fileUserName = #{fileusername,jdbcType=VARCHAR}
+    where fileid = #{fileid,jdbcType=VARCHAR}
+  </update>
+  
+  	<select id="queryTempList" resultMap="BaseResultMap"
+		parameterType="com.mingrisoft.model.TbFile">
+		select
+		<include refid="Base_Column_List" />
+		from tb_file
+		<where>
+			(1=1)
+			
+				and fileType = #{record.filetype,jdbcType=VARCHAR}
+						
+		</where>
+		order by fileid LIMIT #{offset},#{limit}
+	</select>
+</mapper>

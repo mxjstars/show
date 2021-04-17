@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <style>
+        #qrcode {
+            /*text-align: center;*/
+            /*display: table-cell;*/
+            /*width: 96px;*/
+            /*height: 96px;*/
+            /*vertical-align:middle;*/
+            /*position: relative;*/
+        }
+    </style>
+</head>
+<body>
+    <div id="qrcode3">
+    </div>
+    <div id="qrcode2">
+    </div>
+    <script>
+    function cc()
+    {
+        qrcode.makeCode(document.getElementById("getval").value);
+    }
+    $(function () {
+        var qrcode = new QRCode(document.getElementById("qrcode3"), {
+            width: 96,//设置宽高
+            height: 96
+        });
+        qrcode.makeCode("http://192.168.1.239:8081/senceCreate/#/scene/create/16850b41-b278-41b1-9a1d-9714391f82a0?pageId=1");
+    });
+
+    </script>
+</body>
+</html>

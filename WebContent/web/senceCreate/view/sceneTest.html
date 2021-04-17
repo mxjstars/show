@@ -1,0 +1,97 @@
+<div class="choose_template min_contain">
+    <div class="main clearfix">
+        <div class="title">
+            空白自主创建，或者选择一个样例
+            <a class="bbs-help-tip" target="_blank"
+               href="http://www.48ym.com/forum.php?mod=viewthread&amp;tid=1906&amp;page=1&amp;extra=#pid6622"> <span
+                    class="eqf-exclaquestion-sign"></span></a>
+            &lt;!&ndash; <a class="btn-secondary" ng-click="createScene()">or自主创建</a> &ndash;&gt;
+        </div>
+        <div class="scene_type clearfix">
+
+            <div class="new_hot">
+
+                <div class="product" style="float:right">
+
+                    <a style="padding-right:5px" href="http://www.48ym.com/forum.php?mod=viewthread&amp;tid=8103"
+                       target="_blank">品牌合作</a>|
+                    <a style="padding-left:5px" href=" http://www.48ym.com/forum.php?mod=viewthread&amp;tid=8293"
+                       target="_blank">样例提交</a>
+                </div>
+                <!--<a ng-class="{hover: order==\'new\'}" ng-click="freeTplChoice=\'\';tplnew(\'new\');">最新场景</a>
+                <a ng-class="{hover: order==\'hot\'}" ng-click="freeTplChoice=\'\';tplnew(\'hot\')">热门场景</a>
+                <a ng-class="{hover: freeTplChoice==\'free\'}" ng-click="order=\'\';freeTpl(\'free\')">免费</a>
+                <a ng-class="{hover: freeTplChoice==\'noFree\'}" ng-click="order=\'\';freeTpl(\'noFree\')">付费</a>-->
+            </div>
+            <div class="scene_list">
+
+                <ul class="clearfix scene_cat">
+
+                    <li ng-class="{active : 0 == childcat}" ng-click="allpage(null,null)">全部</li>
+                    <li ng-class="{active : pageTplType.value == childcat}"
+                        ng-click="getPageTplsByType(pageTplType.value,pageTplType.id)"
+                        ng-repeat="pageTplType in pageTplTypes">{{pageTplType.name}}
+                    </li>
+                    <li ng-class="{active: 1 == childcat}" ng-click="getCompanyTpl()"
+                        ng-show="userProperty.type ==2 || userProperty.type ==21">企业样例
+                    </li>
+                </ul>
+                <ul class="clearfix child_cat">
+
+                    <li ng-click="getPageTpls(type,childCat.bizType,childCat.id)"
+                        ng-class="{active:childCat.id == categoryId}" ng-repeat="childCat in childCatrgoryList">
+                        {{childCat.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content clearfix">
+
+            <div class="mask">
+
+                <ul>
+
+                    <li ng-click="createScene()" title="创建一个空白场景">
+                        <div style="height:240px; background-color:#bdd5ef;">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        <p style="height:100px;">自主创建<i class="add_icon"></i></p></li>
+                    <li ng-repeat="tpl in tpls track by $index" ng-class="{mr0:$index%4 == 2}">
+                        <div class="roll" ng-hover="" resource="tpl">
+
+                            <div class="mask-floor" ng-show="tpl.show">
+
+                            </div>
+                            <img style="width:235px;height:240px;" ng-src="{{PREFIX_FILE_HOST + tpl.cover}}" alt=""/>
+
+                            <div class="my_xinxi">
+                                <p>{{tpl.name}}<i class="add_icon"></i></p>
+
+                                <p style="background-color:#FFF;color:#999;padding-right:10px;">作者：{{tpl.userName}}</p>
+                            </div>
+                            <!--<a ng-show="tpl.show" class="preview_scene btn"
+                               href="{{PREFIX_CLIENT_HOST + \'/v-\' + tpl.code}}" target="_blank">预览</a>-->
+                            <a ng-show="tpl.show" class="preview_scene edit_scene btn"
+                               ng-click="createScene(tpl)">就这个了</a>
+                            <span class="tpl-price" ng-if="!!tpl.price"><strong>{{tpl.price}}秀点</strong></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix fl" ng-show="totalItems &gt; 11">
+
+            <pagination style="float: left" first-text="首页" last-text="尾页" previous-text="上一页" next-text="下一页"
+                        max-size="10" items-per-page="11" total-items="totalItems" ng-model="currentPage"
+                        ng-change="pageChanged(currentPage)" boundary-links="true" rotate="true"
+                        num-pages="numPages"></pagination>
+            <div class="current_page">
+
+                <input type="text" ng-model="toPage" ng-keyup="$event.keyCode == 13 ? pageChanged(toPage) : null"/>
+                <a ng-click="pageChanged(toPage)" class="go">GO</a>
+                <span>当前: {{currentPage}} / {{numPages}} 页</span>
+            </div>
+        </div>
+    </div>
+</div>
+

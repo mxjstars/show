@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mingrisoft.dao.TsTempsMapper" >
+  <resultMap id="BaseResultMap" type="com.mingrisoft.model.TsTemps" >
+    <id column="temp_id" property="tempId" jdbcType="INTEGER" />
+    <result column="temp_name" property="tempName" jdbcType="VARCHAR" />
+    <result column="use_num" property="useNum" jdbcType="INTEGER" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="type_code_id" property="typeCodeId" jdbcType="INTEGER" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="state_code_id" property="stateCodeId" jdbcType="INTEGER" />
+    <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="js_file_id" property="jsFileId" jdbcType="INTEGER" />
+    <result column="css_file_id" property="cssFileId" jdbcType="INTEGER" />
+    <result column="sence_code_id" property="senceCodeId" jdbcType="INTEGER" />
+    <result column="Money" property="money" jdbcType="DOUBLE" />
+    <result column="MouseClick" property="mouseclick" jdbcType="INTEGER" />
+    <result column="temp_code" property="tempCode" jdbcType="VARCHAR" />
+    <result column="sh" property="sh" jdbcType="INTEGER" />
+    <result column="tj" property="tj" jdbcType="INTEGER" />
+    <result column="musicUrl" property="musicurl" jdbcType="VARCHAR" />
+    <result column="videoUrl" property="videourl" jdbcType="VARCHAR" />
+    <result column="movietype" property="movietype" jdbcType="INTEGER" />
+    <result column="qrCode" property="qrcode" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="userNum" property="usernum" jdbcType="INTEGER" />
+    <result column="fileType" property="filetype" jdbcType="VARCHAR" />
+    <result column="x" property="x" jdbcType="INTEGER" />
+    <result column="y" property="y" jdbcType="INTEGER" />
+    <result column="w" property="w" jdbcType="INTEGER" />
+    <result column="h" property="h" jdbcType="INTEGER" />
+    <result column="scene_custom_id" property="sceneCustomId" jdbcType="INTEGER" />
+    <result column="scene_typeid" property="sceneTypeid" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.temp_id, t.temp_name, t.use_num, t.addtime, t.type_code_id, t.des, t.state_code_id, t.cover, t.js_file_id, 
+    t.css_file_id, t.sence_code_id, t.Money, t.MouseClick, t.temp_code, t.sh, t.tj, t.musicUrl, t.videoUrl, 
+    t.movietype, t.qrCode, t.author, t.userNum, t.fileType, t.x, t.y, t.w, t.h, t.scene_custom_id, t.scene_typeid,u.user_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_temps t 
+    left join tb_show_user u on t.author = u.user_id 
+    where t.temp_id = #{tempId,jdbcType=INTEGER}
+  </select>
+    <select id="selectBytempCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ts_temps t 
+    left join tb_show_user u on t.author = u.user_id 
+    where t.temp_code = #{tempCode,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ts_temps t
+    where t.temp_id = #{tempId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mingrisoft.model.TsTemps" >
+    insert into ts_temps (temp_id, temp_name, use_num, 
+      addtime, type_code_id, des, 
+      state_code_id, cover, js_file_id, 
+      css_file_id, sence_code_id, Money, 
+      MouseClick, temp_code, sh, 
+      tj, musicUrl, videoUrl, 
+      movietype, qrCode, author, 
+      userNum, fileType, x, 
+      y, w, h, scene_custom_id, 
+      scene_typeid)
+    values (#{tempId,jdbcType=INTEGER}, #{tempName,jdbcType=VARCHAR}, #{useNum,jdbcType=INTEGER}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{typeCodeId,jdbcType=INTEGER}, #{des,jdbcType=VARCHAR}, 
+      #{stateCodeId,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{jsFileId,jdbcType=INTEGER}, 
+      #{cssFileId,jdbcType=INTEGER}, #{senceCodeId,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, 
+      #{mouseclick,jdbcType=INTEGER}, #{tempCode,jdbcType=VARCHAR}, #{sh,jdbcType=INTEGER}, 
+      #{tj,jdbcType=INTEGER}, #{musicurl,jdbcType=VARCHAR}, #{videourl,jdbcType=VARCHAR}, 
+      #{movietype,jdbcType=INTEGER}, #{qrcode,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{usernum,jdbcType=INTEGER}, #{filetype,jdbcType=VARCHAR}, #{x,jdbcType=INTEGER}, 
+      #{y,jdbcType=INTEGER}, #{w,jdbcType=INTEGER}, #{h,jdbcType=INTEGER}, #{sceneCustomId,jdbcType=INTEGER}, 
+      #{sceneTypeid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mingrisoft.model.TsTemps" >
+    insert into ts_temps
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tempId != null" >
+        temp_id,
+      </if>
+      <if test="tempName != null" >
+        temp_name,
+      </if>
+      <if test="useNum != null" >
+        use_num,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="typeCodeId != null" >
+        type_code_id,
+      </if>
+      <if test="des != null" >
+        des,
+      </if>
+      <if test="stateCodeId != null" >
+        state_code_id,
+      </if>
+      <if test="cover != null" >
+        cover,
+      </if>
+      <if test="jsFileId != null" >
+        js_file_id,
+      </if>
+      <if test="cssFileId != null" >
+        css_file_id,
+      </if>
+      <if test="senceCodeId != null" >
+        sence_code_id,
+      </if>
+      <if test="money != null" >
+        Money,
+      </if>
+      <if test="mouseclick != null" >
+        MouseClick,
+      </if>
+      <if test="tempCode != null" >
+        temp_code,
+      </if>
+      <if test="sh != null" >
+        sh,
+      </if>
+      <if test="tj != null" >
+        tj,
+      </if>
+      <if test="musicurl != null" >
+        musicUrl,
+      </if>
+      <if test="videourl != null" >
+        videoUrl,
+      </if>
+      <if test="movietype != null" >
+        movietype,
+      </if>
+      <if test="qrcode != null" >
+        qrCode,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="usernum != null" >
+        userNum,
+      </if>
+      <if test="filetype != null" >
+        fileType,
+      </if>
+      <if test="x != null" >
+        x,
+      </if>
+      <if test="y != null" >
+        y,
+      </if>
+      <if test="w != null" >
+        w,
+      </if>
+      <if test="h != null" >
+        h,
+      </if>
+      <if test="sceneCustomId != null" >
+        scene_custom_id,
+      </if>
+      <if test="sceneTypeid != null" >
+        scene_typeid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tempId != null" >
+        #{tempId,jdbcType=INTEGER},
+      </if>
+      <if test="tempName != null" >
+        #{tempName,jdbcType=VARCHAR},
+      </if>
+      <if test="useNum != null" >
+        #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="typeCodeId != null" >
+        #{typeCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="stateCodeId != null" >
+        #{stateCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null" >
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="jsFileId != null" >
+        #{jsFileId,jdbcType=INTEGER},
+      </if>
+      <if test="cssFileId != null" >
+        #{cssFileId,jdbcType=INTEGER},
+      </if>
+      <if test="senceCodeId != null" >
+        #{senceCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="mouseclick != null" >
+        #{mouseclick,jdbcType=INTEGER},
+      </if>
+      <if test="tempCode != null" >
+        #{tempCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sh != null" >
+        #{sh,jdbcType=INTEGER},
+      </if>
+      <if test="tj != null" >
+        #{tj,jdbcType=INTEGER},
+      </if>
+      <if test="musicurl != null" >
+        #{musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="videourl != null" >
+        #{videourl,jdbcType=VARCHAR},
+      </if>
+      <if test="movietype != null" >
+        #{movietype,jdbcType=INTEGER},
+      </if>
+      <if test="qrcode != null" >
+        #{qrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="usernum != null" >
+        #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="filetype != null" >
+        #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="x != null" >
+        #{x,jdbcType=INTEGER},
+      </if>
+      <if test="y != null" >
+        #{y,jdbcType=INTEGER},
+      </if>
+      <if test="w != null" >
+        #{w,jdbcType=INTEGER},
+      </if>
+      <if test="h != null" >
+        #{h,jdbcType=INTEGER},
+      </if>
+      <if test="sceneCustomId != null" >
+        #{sceneCustomId,jdbcType=INTEGER},
+      </if>
+      <if test="sceneTypeid != null" >
+        #{sceneTypeid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mingrisoft.model.TsTemps" >
+    update ts_temps
+    <set >
+      <if test="tempName != null" >
+        temp_name = #{tempName,jdbcType=VARCHAR},
+      </if>
+      <if test="useNum != null" >
+        use_num = #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="typeCodeId != null" >
+        type_code_id = #{typeCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="des != null" >
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="stateCodeId != null" >
+        state_code_id = #{stateCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null" >
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="jsFileId != null" >
+        js_file_id = #{jsFileId,jdbcType=INTEGER},
+      </if>
+      <if test="cssFileId != null" >
+        css_file_id = #{cssFileId,jdbcType=INTEGER},
+      </if>
+      <if test="senceCodeId != null" >
+        sence_code_id = #{senceCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        Money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="mouseclick != null" >
+        MouseClick = #{mouseclick,jdbcType=INTEGER},
+      </if>
+      <if test="tempCode != null" >
+        temp_code = #{tempCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sh != null" >
+        sh = #{sh,jdbcType=INTEGER},
+      </if>
+      <if test="tj != null" >
+        tj = #{tj,jdbcType=INTEGER},
+      </if>
+      <if test="musicurl != null" >
+        musicUrl = #{musicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="videourl != null" >
+        videoUrl = #{videourl,jdbcType=VARCHAR},
+      </if>
+      <if test="movietype != null" >
+        movietype = #{movietype,jdbcType=INTEGER},
+      </if>
+      <if test="qrcode != null" >
+        qrCode = #{qrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="usernum != null" >
+        userNum = #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="filetype != null" >
+        fileType = #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="x != null" >
+        x = #{x,jdbcType=INTEGER},
+      </if>
+      <if test="y != null" >
+        y = #{y,jdbcType=INTEGER},
+      </if>
+      <if test="w != null" >
+        w = #{w,jdbcType=INTEGER},
+      </if>
+      <if test="h != null" >
+        h = #{h,jdbcType=INTEGER},
+      </if>
+      <if test="sceneCustomId != null" >
+        scene_custom_id = #{sceneCustomId,jdbcType=INTEGER},
+      </if>
+      <if test="sceneTypeid != null" >
+        scene_typeid = #{sceneTypeid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where temp_id = #{tempId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mingrisoft.model.TsTemps" >
+    update ts_temps
+    set temp_name = #{tempName,jdbcType=VARCHAR},
+      use_num = #{useNum,jdbcType=INTEGER},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      type_code_id = #{typeCodeId,jdbcType=INTEGER},
+      des = #{des,jdbcType=VARCHAR},
+      state_code_id = #{stateCodeId,jdbcType=INTEGER},
+      cover = #{cover,jdbcType=VARCHAR},
+      js_file_id = #{jsFileId,jdbcType=INTEGER},
+      css_file_id = #{cssFileId,jdbcType=INTEGER},
+      sence_code_id = #{senceCodeId,jdbcType=INTEGER},
+      Money = #{money,jdbcType=DOUBLE},
+      MouseClick = #{mouseclick,jdbcType=INTEGER},
+      temp_code = #{tempCode,jdbcType=VARCHAR},
+      sh = #{sh,jdbcType=INTEGER},
+      tj = #{tj,jdbcType=INTEGER},
+      musicUrl = #{musicurl,jdbcType=VARCHAR},
+      videoUrl = #{videourl,jdbcType=VARCHAR},
+      movietype = #{movietype,jdbcType=INTEGER},
+      qrCode = #{qrcode,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      userNum = #{usernum,jdbcType=INTEGER},
+      fileType = #{filetype,jdbcType=VARCHAR},
+      x = #{x,jdbcType=INTEGER},
+      y = #{y,jdbcType=INTEGER},
+      w = #{w,jdbcType=INTEGER},
+      h = #{h,jdbcType=INTEGER},
+      scene_custom_id = #{sceneCustomId,jdbcType=INTEGER},
+      scene_typeid = #{sceneTypeid,jdbcType=INTEGER}
+    where temp_id = #{tempId,jdbcType=INTEGER}
+  </update>
+  
+  
+  	<select id="queryTempList" resultMap="BaseResultMap"
+		parameterType="com.mingrisoft.model.TsTemps">
+		select
+		<include refid="Base_Column_List" />
+		from ts_temps t 
+		left join tb_show_user u on t.author = u.user_id 
+		<where>
+			(1=1)
+			<if test="typeCodeId!=null and typeCodeId!=''">
+				and t.type_code_id = #{typeCodeId,jdbcType=INTEGER}
+			</if>
+			<if test="money!=null and money!=''">
+				and t.Money = #{money,jdbcType=INTEGER}
+			</if>
+
+		</where>
+		order by t.temp_id desc
+	</select>
+</mapper>

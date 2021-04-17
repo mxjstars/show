@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>SHOW</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/MethodIndex.js"></script>
+    <script src="js/Exect.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/function.js"></script>
+    <link href="css/css.css" rel="stylesheet" />
+
+    <script>
+        $(function () {
+            //设置画图初始
+            init();
+            //画上点
+            DrowDian();
+            //画图浏览器改变大小重新画
+            winUpdate();
+            //获取行业
+            GetIndustry('#IndustryDiv');
+            //获取场景
+            GetSence('#SenceDiv');
+            //获取初始化模板
+            GetContext();
+            $('#top').load('top.html');
+            $('#footer').load('footer.html');
+        });
+        //网页改变大小事件
+        $(window.parent.window).resize(function () {
+            //获取浏览器高度
+            var winHeight = $(window).height() + $(document).scrollTop();
+            //获取浏览器宽度
+            var winWidth = $(window).width();
+            if ($('#coverDiv')) {
+                $('#coverDiv').css('width', winWidth + "px");
+                $('#coverDiv').css('height', winHeight + "px");
+            }
+        }
+        
+        );
+    </script>
+    <style>
+    </style>
+</head>
+<body style="min-width:1300px; background-color:#f6f9f8;">
+    <!--头部-->
+    <div id="top" style="width:100%; height:60px; border:none; z-index:20; min-width:1300px; position:absolute; top:0px; left:0px;"></div>
+    <!--广告-->
+    <section id="advDiv" style="width:100%; height:500px; margin-top:-5px; position:relative; ">
+        <canvas id="canvas" height="500" onClick="ImgClick()" style="cursor:pointer;"></canvas>
+        <div id="dian"></div>
+        <div id="oo"></div>
+    </section>
+    <div style="background-color:white; width:1140px; margin:20px auto; border-radius:10px;">
+        <!--行业-->
+        <section id="listIndustryDiv" style="height:40px; position:relative; width:1120px; margin:0px auto; " class="bennTitle">
+            <div style="z-index:5; height:30px; width:100%; position:absolute; top:0;left:0; margin-top:10px;">
+                <div id="fdbg" style="background-color:#f39800; height:30px; width:45px; position:absolute; left:56px;"></div>
+            </div>
+            <p style="color:#666666; cursor:default;">行业</p>
+            <p style="background-color:#f39800; width:40px; color:#fff; margin-right:30px; text-align:center;" value="0" onclick="IndustrySelect(this)">全部</p>
+            <section style="float:left;" id="IndustryDiv" class="bennTitle">
+                <!--行业title-->
+            </section>
+            <p id="hymore" style="float:right; margin-right:20px; display:none;" onMouseOver="IndustryOverp(this)" onMouseOut="IndustryOutp(this)">更多+</p>
+            <section id="moreIn"></section>
+        </section>
+        <hr style="border:dashed 1px #CCC; clear:both; margin-top:10px; width:1090px; margin-left:auto; margin-right:auto;" />
+        <!--场景-->
+        <section id="listSenceDiv" class="bennTitle" style="height:40px; padding-bottom:10px; position:relative; width:1120px; margin:0px auto;">
+            <div style="z-index:5; height:30px; width:100%; position:absolute; top:0;left:0; margin-top:10px;">
+                <div id="cjbg" style="background-color:#f39800; height:30px; width:45px; position:absolute; left:56px;"></div>
+            </div>
+            <p style="color:#666666; cursor:default;">场景</p>
+            <p style="background-color:#f39800; width:40px;  color:#fff; margin-right:30px;" value="0" onclick="SenceSelect(this)">全部</p>
+            <section style="float:left;" id="SenceDiv" class="bennTitle">
+                <!--场景title-->
+            </section>
+            <p id="cjmore" style="float:right; margin-right:20px; display:none;" onMouseOver="SenceOverp(this)" onMouseOut="SenceOutp(this)">更多+</p>
+            <section id="moreCen"></section>
+
+        </section>
+    </div>
+    
+    <article>
+        <section style="margin-top:40px; margin-left:50px; height:40px; margin-right:80px; width:1110px; margin-left:auto; margin-right:auto;">
+            <div style="position:relative">
+                <div style="height:32px; width:160px; position:absolute; top:0px; left:0px; z-index:20; border-radius:6px 6px 6px 6px; overflow: hidden; text-overflow: clip;">
+                    <div id="ftag" style="width: 80px; height: 30px; background-color:#f39800; position:absolute; left:0px; border:1px solid #f39800; border-radius:10px 0px 0px 10px;"></div>
+                </div>
+                <div style="height:32px; width:160px; position:absolute; top:0px; left:0px; z-index:21;">
+                    <div onclick="Fclick(this,0)" class="ChangeDiv" style="border-radius:6px 0px 0px 6px; float:left; color:white;">全部</div>
+                    <div onclick="Fclick(this,1)" class="ChangeDiv" style="border-radius:0px 6px 6px 0px; border-left:none; float:left; color:#f39800; ">免费</div>
+                </div>
+            </div>
+            
+
+            <div style="position:relative; float:right; margin-right:160px;">
+                <div style="height:32px; width:160px; position:absolute; top:0px; left:0px; z-index:20; border-radius:10px 6px 6px 6px;">
+                    <div id="ztag" style="width: 80px; height: 30px; background-color:#f39800; position:absolute; left:0px; border:1px solid #f39800; border-radius:10px 0px 0px 10px;"></div>
+                </div>
+                <div style="height:42px; width:160px; position:absolute; top:0px; left:0px; z-index:21;">
+                    <div onclick="Newclick(this, 1)" class="ChangeDiv" style="border-radius:0px 6px 6px 0px; border-left:none; float:right; color:#f39800;">最新发布</div>
+                    <div onclick="Newclick(this, 0)" class="ChangeDiv" style="border-radius:6px 0px 0px 6px;  float:right; color:white; ">最受欢迎</div>
+                </div>
+            </div>
+            
+        </section>
+        <!--模板集合-->
+        <section id="ContentDiv" style="margin-top:20px; margin:0px auto; width:1210px; clear:both;">
+            <!--空白模板-->
+            <!--<section id="noneDiv" class="tempDiv">
+                <section style="height:210px; position:relative;">
+                    <div style="border:solid 10px #CCCCCC; height:120px; width:0px; position:absolute; top:40px; left:90px;"></div>
+                    <div style="border:solid 10px #CCCCCC; width:120px; position:absolute; top:100px; left:30px;"></div>
+                </section>
+                <section style="text-align:center; font-size:23px; color:#7A7A7A">
+                    空白模板
+                </section>
+            </section>-->
+            <!--空白模板End-->
+        </section>
+
+        <!--站位专用-->
+        <div style="height:60px; width:100%;clear:both;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <section id="GetMore" onclick="nextPage()" style="clear:both; height:70px; border:solid 1px #CCC; text-align:center; line-height:70px; font-size:18px; font-weight:900;letter-spacing:5px; cursor:pointer; color:#7F7F7F; border-left:none; border-right:none;">
+            点击查看更多...
+        </section>
+    </article>
+
+    <div id="footer"></div>
+    <aside style="position:fixed; bottom:0px; right:0px; ">
+        <section class="asidDiv" onclick="GetTop()">
+            返回<br />顶部
+        </section>
+        <hr style="border-color:rgba(255,255,255,0)" />
+        <section class="asidDiv">
+            App<br />下载
+        </section>
+        <hr style="border-color:rgba(255,255,255,0)" />
+        <section class="asidDiv">
+            微信<br />公共号
+        </section>
+        <hr style="border-color:rgba(255,255,255,0)" />
+        <section class="asidDiv">
+            QQ<br />咨询
+        </section>
+    </aside>
+</body>
+

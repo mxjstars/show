@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var pd = { "t": "5" };
+            $.ajax({
+                type: "post",
+                url: "loginOnCheck.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.window.location.href = "index.html";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

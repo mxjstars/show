@@ -1,0 +1,127 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/Exect.js"></script>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-family: "Comic Sans MS","微软雅黑",sans-serif;
+            color: #666666;
+            font-size:18px;
+        }
+
+        .lineDivColor {
+            width: 70%;
+            margin: 0px auto;
+            height: 90px;
+            background-color: #EEEEEE;
+            min-width: 1000px;
+            line-height: 90px;
+            border: solid 1px #ccc;
+        }
+
+        .lineDiv {
+            width: 70%;
+            margin: 0px auto;
+            height: 90px;
+            border: solid 1px #ccc;
+            min-width: 1000px;
+            line-height: 90px;
+            border-bottom: none;
+            border-top: none;
+        }
+    </style>
+    <script>
+        $(function () {
+            bindText();
+            $('#top').load('top.html', function () {
+                $('#webtop').css('background-color', '#fe8a51');
+                $('.mouseHove').css('color', '#fff');
+                $('#createBtn').remove();
+                $('#mylist').css('background-color', '#fe8a51');
+                $('.fontcolor').css('color', '#fff');
+                $('#ToprightSection').css('width', '340px');
+            });
+        });
+        function bindText()
+        {
+            //设置邮箱是否绑定
+            //设置手机是否绑定
+            var pd = { "t": "11" };
+            $.ajax({
+                type: "post",
+                url: "loginOnCheck.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status != "-1") {
+                        if (data.Phone != "") {
+                            $('#emailBindText').html('已绑定');
+                            $('#emailBind').html('修改');
+                        }
+                        if (data.email != "") {
+                            $('#phoneBindText').html('已绑定');
+                            $('#PhoneBind').html('修改');
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        function clickEmail() {
+            //点击绑定邮箱 UserBind
+            EjectIdent('UserBind.html?t=1',"", 600, 350);
+        }
+        function clickPhone() {
+            //点击绑定手机 UserBind
+            EjectIdent('UserBind.html?t=0', "", 600, 350);
+        }
+        function Updatepwd()
+        {
+            //修改密码
+            EjectIdent('UserBind.html?t=2', "", 600, 350);
+        }
+    </script>
+</head>
+
+<body style="min-width:1000px;">
+    <!--头部-->
+    <div id="top" style="width:100%; height:60px; border:none; z-index:20; min-width:1300px; position:absolute; top:0px; left:0px;"></div>
+    <!--<iframe src="top.html" style="box-shadow:2px 3px 15px; width:100%; height:60px; border:none; z-index:100; min-width:1000px;">您的浏览器不支持iframe</iframe>-->
+    <section class="lineDivColor" style="margin-top:120px;">
+        <section style="margin-left:100px; float:left;">密保邮箱</section>
+        <section style="margin-left:100px; float:left;" id="emailBindText">未绑定</section>
+        <section style="margin-right:100px; float:right; color:#00F; cursor:pointer" id="emailBind" onclick="clickEmail()">绑定</section>
+    </section>
+    <section class="lineDiv">
+        <section style="margin-left:100px; float:left;">账号类型</section>
+        <section style="margin-left:100px; float:left;">普通用户</section>
+        <section style="margin-right:100px; float:right; color:#00F; cursor:pointer">--&nbsp;&nbsp;</section>
+    </section>
+    <section class="lineDivColor">
+        <section style="margin-left:100px; float:left;">登陆密码</section>
+        <section style="margin-left:100px; float:left;">建议使用6-16个字符，可包括到大小写字母和数字</section>
+        <section style="margin-right:100px; float:right; color:#00F; cursor:pointer" onclick="Updatepwd()">修改</section>
+    </section>
+    <section class="lineDiv">
+        <section style="margin-left:100px; float:left;">手机验证</section>
+        <section style="margin-left:100px; float:left;" id="phoneBindText">未绑定</section>
+        <section style="margin-right:100px; float:right; color:#00F; cursor:pointer" id="PhoneBind" onclick="clickPhone()">绑定</section>
+    </section>
+    <section class="lineDivColor">
+        <section style="margin-left:100px; float:left;">微信账号</section>
+        <section style="margin-left:100px; float:left;">未绑定</section>
+        <section style="margin-right:100px; float:right; color:#00F; cursor:pointer;">--&nbsp;&nbsp;</section>
+    </section>
+    <section class="lineDiv" style="border-bottom:solid 1px #ccc;">
+        <section style="margin-left:100px; float:left;">QQ账号</section>
+        <section style="margin-left:100px; float:left;">未绑定</section>
+        <section style="margin-right:100px; float:right; color:#00F; cursor:pointer">--&nbsp;&nbsp;</section>
+    </section>
+</body>
+</html>

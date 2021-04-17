@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mingrisoft.dao.TbShowUserMapper" >
+  <resultMap id="BaseResultMap" type="com.mingrisoft.model.TbShowUser" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="sina_blog" property="sinaBlog" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="user_type_code_id" property="userTypeCodeId" jdbcType="INTEGER" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="state_code_id" property="stateCodeId" jdbcType="INTEGER" />
+    <result column="headImg" property="headimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_pwd, nick_name, Phone, email, qq, wechat, sina_blog, gender, 
+    integral, user_type_code_id, addtime, state_code_id, headImg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_show_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_show_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mingrisoft.model.TbShowUser" >
+    insert into tb_show_user (user_id, user_name, user_pwd, 
+      nick_name, Phone, email, 
+      qq, wechat, sina_blog, 
+      gender, integral, user_type_code_id, 
+      addtime, state_code_id, headImg
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{sinaBlog,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{userTypeCodeId,jdbcType=INTEGER}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{stateCodeId,jdbcType=INTEGER}, #{headimg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mingrisoft.model.TbShowUser" >
+    insert into tb_show_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="wechat != null" >
+        wechat,
+      </if>
+      <if test="sinaBlog != null" >
+        sina_blog,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="userTypeCodeId != null" >
+        user_type_code_id,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="stateCodeId != null" >
+        state_code_id,
+      </if>
+      <if test="headimg != null" >
+        headImg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="sinaBlog != null" >
+        #{sinaBlog,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="userTypeCodeId != null" >
+        #{userTypeCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stateCodeId != null" >
+        #{stateCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mingrisoft.model.TbShowUser" >
+    update tb_show_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="sinaBlog != null" >
+        sina_blog = #{sinaBlog,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="userTypeCodeId != null" >
+        user_type_code_id = #{userTypeCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stateCodeId != null" >
+        state_code_id = #{stateCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="headimg != null" >
+        headImg = #{headimg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mingrisoft.model.TbShowUser" >
+    update tb_show_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      sina_blog = #{sinaBlog,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      user_type_code_id = #{userTypeCodeId,jdbcType=INTEGER},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      state_code_id = #{stateCodeId,jdbcType=INTEGER},
+      headImg = #{headimg,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+    <select id="selectByNamePwd" resultMap="BaseResultMap" parameterType="com.mingrisoft.model.TbShowUser" >
+    	select
+		<include refid="Base_Column_List" />
+		from tb_show_user
+		<where>
+			(1=1)
+			<if test="userName!=null and userName!=''">
+				and user_name = #{userName,jdbcType=VARCHAR} 
+			</if>
+			<if test="userPwd!=null and userPwd!=''">
+				and user_pwd = #{userPwd,jdbcType=VARCHAR}
+			</if>
+		</where>
+  </select>
+</mapper>

@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8" />
+    <meta name="baidu-site-verification" content="2MKKT6mbuL" />
+    	<title>场景预览</title>
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <meta id="eqMobileViewport" name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" servergenerated="true">
+  	<link rel="stylesheet" href="view/css/eqShow-4.2.2.css"/>
+    
+    <link rel="stylesheet" href="Public/css/my52.css"/>
+    <link rel="stylesheet" href="view/ditu_view.css"/>
+         <link rel="stylesheet" href="view/lycc.css" />
+</head>
+<body>
+
+<div id="ppitest" style="width:1in;visible:hidden;padding:0px"></div>
+<div class="p-index main phoneBox" id="con" style="display: none;">
+    <div class="top"></div>
+    <div class="phone_menubar"></div>
+    <div class="scene_title_baner" style="display: none">
+        <div class="scene_title">{$confinfo2[title]}</div>
+    </div>
+    <div class="nr" id="nr">
+        <div id="audio_btn" class="off">
+            <div id="yinfu"></div>
+            <audio loop src="" id="media" autoplay="" preload></audio>
+        </div>
+        <div id="loading" class="loading">
+            <div class="loadbox">  
+                <div class="loadbg" ></div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="bottom"></div>
+</div>
+
+</body>
+<script src="Public/css/waiwan/jquery.min.js"></script>
+
+<script >
+ (function (window, $) {
+   window.PREFIX_URL = "http://"+window.location.host+"/show/web/";
+    window.PREFIX_S1_URL =  "http://"+window.location.host+"/show/web/";//"/json/";
+    window.PREFIX_S2_URL ="http://"+window.location.host+"/index.html";
+    window.PREFIX_HOST = "http://"+window.location.host+"/index.html";
+    window.PREFIX_HOST1 = "http://"+window.location.host+"/index.html";
+    window.PREFIX_FILE_HOST = "http://"+window.location.host+"/";
+    window.CLIENT_CDN ="http://"+window.location.host+"/show/web/senceCreate/"; 
+   window.clientWidth = document.documentElement.clientWidth;
+    window.clientHeight = document.documentElement.clientHeight;    
+       
+})(window, jQuery)
+</script>
+ <script type="text/javascript" src="Public/eq/4.2/eqShow-4.2.2_view.js"></script>
+   
+<script>
+ 
+    eqShow.bootstrap(); 
+</script>
+</html>

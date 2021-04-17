@@ -1,0 +1,435 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .StartButton {
+            float: right;
+            margin-right: 300px;
+            background-color: red;
+            cursor: pointer;
+            animation: textBig 3s infinite;
+        }
+
+        @keyframes textBig {
+            0% {
+                font-size: 14px;
+            }
+
+            50% {
+                font-size: 20px;
+            }
+
+            100% {
+                font-size: 14px;
+            }
+        }
+        .divClolor div:nth-child(n) {
+            background-color: rgb(255, 215, 142);
+        }
+        .divClolor div:nth-child(2n) {
+            background-color: rgb(162, 187, 255);
+        }
+        
+    </style>
+    <script>
+        function clear() {
+            for (var i = 1; i < 14; i++) {
+                $('#c' + i).html('');
+            }
+        }
+        //场景标识
+        var sceneCode = '026d6af7-a8dd-4032-9cb5-ed516a242fe3';
+        //页面id
+        var pageID = '12';
+        //页面信息
+        var elements = '{"content": "test","css": { "top": "100px", "left": "0px","zIndex": "1","lineHeight": 1,"backgroundColor": "","opacity": 1,"color": "#676767","borderWidth": 0,"borderStyle": "solid","borderColor": "rgba(0,0,0,1)","paddingBottom": 0,"paddingTop": 0,"borderRadius": "0px","transform": "rotateZ(0deg)","borderRadiusPerc": 0,"boxShadow": "0px 0px 0px rgba(0,0,0,0.5)","boxShadowDirection": 0,"boxShadowSize": 0,"borderBottomRightRadius": "0px","borderBottomLeftRadius": "0px","borderTopRightRadius": "0px","borderTopLeftRadius": "0px"},  "id": 312, "num": 1,"pageId": "2470","properties": {"anim": [{"type": 0,"direction": 0, "duration": 0.8,"delay": 1, "countNum": 1,"count": null}]}, "sceneId": "6205344","title": null,"type": 2}';
+        //页面名称
+        var name = '测试名称';
+        //页面新名称
+        var newname = '新名字';
+        //页数
+        var num = '1';
+        //新页数
+        var newnum = '2';
+        //要删除的页面
+        var deleteid = '53';
+        //删除文件
+        var fileid = '1';
+
+        //获取场景基本属性信息
+        function t1() {
+            var pd = { "t": "pageList", "sceneCode": sceneCode };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c1').html('√');
+                    }
+                    else {
+                        $('#c1').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('1');
+                }
+            });
+        }
+        //获取场景页面属性
+        function t2() {
+            var pd = { "t": "design", "pageID": pageID };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c2').html('√');
+                    }
+                    else {
+                        $('#c2').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('2');
+                }
+            });
+        }
+        //保存页面信息
+        function t3() {
+            var pd = { "t": "savePage", "id": pageID, "elements": elements, "sceneId": sceneCode, "name": name, "num": num };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c3').html('√');
+                    }
+                    else {
+                        $('#c3').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('3');
+                }
+            });
+        }
+        //修改页面名称
+        function t4() {
+            var pd = { "t": "savePageName", "id": pageID, "name": newname };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c4').html('√');
+                    }
+                    else {
+                        $('#c4').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('4');
+                }
+            });
+        }
+        //调整页面顺序
+        function t5() {
+            var pd = { "t": "pageSort", "pageid": pageID, "num": newnum };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c5').html('√');
+                    }
+                    else {
+                        $('#c5').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('5');
+                }
+            });
+        }
+        //创建页面
+        function t6() {
+            var pd = { "t": "createPage", "id": pageID };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c6').html('√');
+                    }
+                    else {
+                        $('#c6').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('6');
+                }
+            });
+        }
+        //删除页面
+        function t7() {
+            var pd = { "t": "delPage", "id": deleteid };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c7').html('√');
+                    }
+                    else {
+                        $('#c7').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('7');
+                }
+            });
+        }
+        //复制页面
+        function t8() {
+            var pd = { "t": "copyPage", "id": pageID };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c8').html('√');
+                    }
+                    else {
+                        $('#c8').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('8');
+                }
+            });
+        }
+        //获取文件列表
+        function t9() {
+            var pd = { "t": "getFileList", "pageNo": pageID, "pageSize": '10', "fileType": '0' };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c9').html('√');
+                    }
+                    else {
+                        $('#c9').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('9');
+                }
+            });
+        }
+        //删除文件
+        function t10() {
+            var pd = { "t": "delFile", "fileid": fileid };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c10').html('√');
+                    }
+                    else {
+                        $('#c10').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('10');
+                }
+            });
+        }
+        //获取场景基本配置
+        function t11() {
+            var pd = { "t": "getSceneSetting", "sceneId": sceneCode };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c11').html('√');
+                    }
+                    else {
+                        $('#c11').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        //发布场景
+        function t12() {
+            var pd = { "t": "publish", "id": sceneCode, "name": newname, "createUser": "51db2660507a471c95b40723c32134cc", "type": "0", "createTime": "2015-8-8", "cover": "xxx.jpg", "code": sceneCode,"description":"这是一个署名啊" };
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c12').html('√');
+                    }
+                    else {
+                        $('#c12').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        //预览场景
+        function t13() {
+            var pd = { "t": "preview", "id": sceneCode};
+            $.ajax({
+                type: "post",
+                url: "Tools/interface.ashx",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#c13').html('√');
+                    }
+                    else {
+                        $('#c13').html('<font style="background-color:red;">×<font>');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        var p = 1;
+        function Test() {
+            clear();
+            var t= window.setInterval(function () {
+                switch (p)
+                {
+                    case 1:
+                        t1();
+                        p++;
+                        break;
+                    case 2:
+                        t2();
+                        p++;
+                        break;
+                    case 3:
+                        t3();
+                        p++;
+                        break;
+                    case 4:
+                        t4();
+                        p++;
+                        break;
+                    case 5:
+                        t5();
+                        p++;
+                        break;
+                    case 6:
+                        t6();
+                        p++;
+                        break;
+                    case 7:
+                        t7();
+                        p++;
+                        break;
+                    case 8:
+                        t8();
+                        p++;
+                        break;
+                    case 9:
+                        t9();
+                        p++;
+                        break;
+                    case 9:
+                        t1();
+                        p++;
+                        break;
+                    case 10:
+                        t10();
+                        p++;
+                        break;
+                    case 11:
+                        t11();
+                        p++;
+                        break;
+                    case 12:
+                        t12();
+                        p++;
+                        break;
+                    case 13:
+                        t13();
+                        p++;
+                        break;
+                    default:
+                        if (p > 13)
+                        {
+                            window.clearInterval(t);
+                        }
+                }
+            }, 200);
+        }
+        $(function () {
+            clear();
+        });
+    </script>
+</head>
+<body>
+    <div style="width:400px; margin:0px auto;">
+        测试接口《测试之前要把session注释》
+    </div>
+    <div style="height:90px;">
+        <a class="StartButton" onclick="Test()">开始测试</a>
+    </div>
+    <div class="divClolor" style="width:800px; border: solid 1px rgb(221, 221, 221); margin:0px auto; padding:20px 0px; line-height:20px; height:680px;">
+        <div style="clear:both; height:50px;"><p style="float:left">1.获取场景页面基本信息（pageList）</p><p id="c1" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">2.获取场景基本信息（design）</p><p id="c2" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">3.保存页面（savePage）</p><p id="c3" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">4.保存页面名称（savePageName）</p><p id="c4" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">5.调整页面顺序（pageSort）</p><p id="c5" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">6.创建页面（createPage）</p><p id="c6" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">7.删除页面（delPage）</p><p id="c7" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">8.复制页面（copyPage）</p><p id="c8" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">9.获取文件列表（getFileList）</p><p id="c9" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">10.删除文件（delFile）</p><p id="c10" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">11.获取场景基本配置（getSceneSetting）</p><p id="c11" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">12.发布场景（publish）</p><p id="c12" style="float:right; padding-right:50px;">√</p></div>
+        <div style="clear:both; height:50px;"><p style="float:left">13.预览场景（preview）</p><p id="c13" style="float:right; padding-right:50px;">√</p></div>
+    </div>
+</body>
+</html>

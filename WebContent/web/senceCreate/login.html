@@ -1,0 +1,48 @@
+<div class="login-form-section"> 
+    <div class="login-content"> 
+        <form class="loginForm" novalidate ng-show="showLogin && !sendPassword"> 
+            <div class="section-title">  <h3>再次登录</h3>   
+            </div>
+             
+            <div class="error-wrap"> 
+                <div class="alert alert-danger" role="alert" ng-show="authReason">  您长时间未操作，请登录！ </div>           
+            </div>
+             
+            <div class="textbox-wrap"> 
+                <div class="input-group">  <span class="input-group-addon "><i class="fa fa-envelope"></i></span> 
+                    <input class="form-control" id="username" name="userEmail" placeholder="手机号或邮箱 " type="text"
+                           ng-model="user.email" ng-keyup="$event.keyCode == 13 ? login() : null" required autofocus
+                           add-class/> 
+                </div>
+                 
+            </div>
+             
+            <div class="textbox-wrap"> 
+                <div class="input-group">  <span class="input-group-addon "><i class="fa fa-key"></i></span>  <input
+                        class="form-control" name="pass" placeholder="密码" type="password" ng-model="user.password"
+                        ng-keyup="$event.keyCode == 13 ? login() : null" required add-class/> 
+                </div>
+                 
+            </div>
+             
+            <div class="textbox-wrap validate clearfix" ng-if="isValidateCodeLogin"> 
+                <div> 
+                    <script type="text/javascript" load-script ng-src="{{validateCodeUrl}}"></script>
+                     
+                </div>
+                 
+            </div>
+             
+            
+             
+            <div class="login-form-action clearfix">  <a class="btn pull-left btn-main" ng-click="login()">登录</a>  
+            </div>
+             
+            
+             
+        </form>
+         
+         
+    </div>
+     
+</div>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mingrisoft.dao.TbCodeMapper">
+	<resultMap id="BaseResultMap" type="com.mingrisoft.model.TbCode">
+		<id column="code_id" property="codeId" jdbcType="INTEGER" />
+		<result column="group_id" property="groupId" jdbcType="INTEGER" />
+		<result column="msg" property="msg" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		code_id, group_id, msg, state
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_code
+		where code_id = #{codeId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_code
+		where code_id = #{codeId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.mingrisoft.model.TbCode">
+		insert into tb_code (code_id, group_id, msg,
+		state)
+		values (#{codeId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER},
+		#{msg,jdbcType=VARCHAR},
+		#{state,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.mingrisoft.model.TbCode">
+		insert into tb_code
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="codeId != null">
+				code_id,
+			</if>
+			<if test="groupId != null">
+				group_id,
+			</if>
+			<if test="msg != null">
+				msg,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="codeId != null">
+				#{codeId,jdbcType=INTEGER},
+			</if>
+			<if test="groupId != null">
+				#{groupId,jdbcType=INTEGER},
+			</if>
+			<if test="msg != null">
+				#{msg,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.mingrisoft.model.TbCode">
+		update tb_code
+		<set>
+			<if test="groupId != null">
+				group_id = #{groupId,jdbcType=INTEGER},
+			</if>
+			<if test="msg != null">
+				msg = #{msg,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+		</set>
+		where code_id = #{codeId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.mingrisoft.model.TbCode">
+		update tb_code
+		set group_id = #{groupId,jdbcType=INTEGER},
+		msg = #{msg,jdbcType=VARCHAR},
+		state = #{state,jdbcType=INTEGER}
+		where code_id = #{codeId,jdbcType=INTEGER}
+	</update>
+
+
+	<select id="queryTempList" resultMap="BaseResultMap"
+		parameterType="com.mingrisoft.model.TbCode">
+		select
+		<include refid="Base_Column_List" />
+		from tb_code
+		<where>
+			(1=1)
+			<if test="codeId!=null and codeId!=''">
+				and code_id = #{codeId,jdbcType=INTEGER}
+			</if>
+			<if test="groupId!=null and groupId!=''">
+				and group_id = #{groupId,jdbcType=INTEGER}
+			</if>
+			<if test="msg!=null and msg!=''">
+				and msg = #{msg,jdbcType=VARCHAR}
+			</if>
+			<if test="state!=null and state!=''">
+				and state = #{state,jdbcType=INTEGER} 
+			</if>
+		</where>
+		order by code_id asc
+	</select>
+</mapper>

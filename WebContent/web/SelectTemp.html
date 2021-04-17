@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/Exect.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/function.js"></script>
+    <link href="css/css.css" rel="stylesheet" />
+    <title>请选择模板</title>
+
+	<!--模板相关js-->
+    <script>
+		//模板鼠标移入
+    	function tempMouseOver(DivThis)
+		{
+			$(DivThis).children('div').show();
+		}
+		//模板鼠标移出
+		function tempMouseOut(DivThis)
+		{
+			$(DivThis).children('div').hide();
+		}
+		function closeIndex()
+		{
+		    window.location.href = "index.html";
+		}
+		$(function () {
+		    //获取行业
+		    GetIndustry('#IndustryDiv');
+		    //获取场景
+		    GetSence('#SenceDiv');
+		    //获取初始化模板
+		    GetContext();
+		});
+		//网页改变大小事件
+		$(window.parent.window).resize(function () {
+		    //获取浏览器高度
+		    var winHeight = $(window).height() + $(document).scrollTop();
+		    //获取浏览器宽度
+		    var winWidth = $(window).width();
+		    if ($('#coverDiv')) {
+		        $('#coverDiv').css('width', winWidth + "px");
+		        $('#coverDiv').css('height', winHeight + "px");
+		    }
+		}
+        );
+		function Serach()
+		{
+		    SerachStr = $('#selectModel').val();
+		    //获取初始化模板
+		    GetContext();
+		}
+    </script>
+    <style>
+        input::-webkit-input-placeholder {
+            color:#666666;
+            font-size:14px;
+            line-height:17px;
+        }
+    </style>
+</head>
+
+<body style="min-width:1000px; background-color:#f6f9f8;">
+    <section style="width:100%; height:50px; background-color:#fe8a51; color:white; font-weight:900; font-size:22px; text-align:center; line-height:50px;">
+    	请选择场景模板
+        <p style="float:right; font-size:60px; margin-right:20px; cursor:pointer; color:white; font-family:'Cordia New'" onclick="closeIndex()">×</p>
+    </section>
+    <!--行业-->
+    <section id="listIndustryDiv" style="height:40px; position:relative; width:1120px; margin:0px auto;" class="bennTitle">
+        <div style="z-index:5; height:30px; width:100%; position:absolute; top:0;left:0; margin-top:10px;">
+            <div id="fdbg" style="background-color:#f39800; height:30px; width:70px; position:absolute; left:59px;"></div>
+        </div>
+        <p style="color:#666666; cursor:default;">行业</p>
+        <p style="background-color:#f39800; width:70px; color:#fff" value="0" onclick="IndustrySelect(this)">全部</p>
+        <section style="float:left;" id="IndustryDiv" class="bennTitle">
+            <!--行业title-->
+        </section>
+        <p style="float:right; margin-right:20px;" onMouseOver="IndustryOverp(this)" onMouseOut="IndustryOutp(this)">更多+</p>
+        <section id="moreIn"></section>
+    </section>
+    <hr style="border:dashed 1px #CCC; clear:both; margin-top:10px; width:1120px; margin-left:auto; margin-right:auto;" />
+    <!--场景-->
+    <section id="listSenceDiv" class="bennTitle" style="height:40px; border-bottom:solid 1px #CCC; padding-bottom:10px; position:relative; width:1120px; margin:0px auto;">
+        <div style="z-index:5; height:30px; width:100%; position:absolute; top:0;left:0; margin-top:10px;">
+            <div id="cjbg" style="background-color:#f39800; height:30px; width:70px; position:absolute; left:59px;"></div>
+        </div>
+        <p style="color:#666666; cursor:default;">场景</p>
+        <p style="background-color:#f39800; width:70px;  color:#fff" value="0" onclick="SenceSelect(this)">全部</p>
+        <section style="float:left;" id="SenceDiv" class="bennTitle">
+            <!--场景title-->
+        </section>
+        <p style="float:right; margin-right:20px;" onMouseOver="SenceOverp(this)" onMouseOut="SenceOutp(this)">更多+</p>
+        <section id="moreCen"></section>
+
+    </section>
+
+    <article>
+        <section style="margin-top:35px; margin-left:50px; height:40px; margin-right:80px; width:1110px; margin-left:auto; margin-right:auto;">
+
+            <div style="position:relative; float:left;">
+                <div style="height:32px; width:160px; position:absolute; top:0px; left:0px; z-index:20; border-radius:10px 10px 10px 10px; overflow: hidden; text-overflow: clip;">
+                    <div id="ftag" style="width: 80px; height: 30px; background-color:#f39800; position:absolute; left:0px; border:1px solid #f39800; border-radius:10px 0px 0px 10px;"></div>
+                </div>
+                <div style="height:32px; width:160px; position:absolute; top:0px; left:0px; z-index:21; ">
+                    <div onclick="Fclick(this,0)" class="ChangeDiv" style="border-radius:10px 0px 0px 10px; float:left; color:white;">全部</div>
+                    <div onclick="Fclick(this,1)" class="ChangeDiv" style="border-radius:0px 10px 10px 0px; border-left:none; float:left; color:#f39800; ">免费</div>
+                </div>
+            </div>
+
+            <div style="float:left; margin-left:350px; position:relative;">
+                <input id="selectModel" type="text" style="border:1px solid #f39800; width:400px; height:30px; border-radius:30px; padding-left:20px;" maxlength="21" placeholder="请输入模板标题关键字" />
+                <img src="sysImg/tupian1.png" onclick="Serach()" style="width:18px; height:18px; position:absolute; left:380px; top:7px; cursor:pointer;">
+            </div>
+
+            <div style="position:relative; float:right; margin-right:160px;">
+                <div style="height:32px; width:160px; position:absolute; top:0px; left:0px; z-index:20; border-radius:10px 10px 10px 10px;">
+                    <div id="ztag" style="width: 80px; height: 30px; background-color:#f39800; position:absolute; left:0px; border:1px solid #f39800; border-radius:10px 0px 0px 10px;"></div>
+                </div>
+                <div style="height:42px; width:160px; position:absolute; top:0px; left:0px; z-index:21;">
+                    <div onclick="Newclick(this, 1)" class="ChangeDiv" style="border-radius:0px 10px 10px 0px; border-left:none; float:right; color:#f39800;">最新发布</div>
+                    <div onclick="Newclick(this, 0)" class="ChangeDiv" style="border-radius:10px 0px 0px 10px;  float:right; color:white; ">最受欢迎</div>
+                </div>
+            </div>
+
+        </section>
+        <!--模板集合-->
+        <section id="ContentDiv" style="margin-top:20px; margin:0px auto; width:1210px; clear:both;">
+            <!--空白模板-->
+            <!--<section id="noneDiv" class="tempDiv">
+                <section style="height:210px; position:relative;">
+                    <div style="border:solid 10px #CCCCCC; height:120px; width:0px; position:absolute; top:40px; left:90px;"></div>
+                    <div style="border:solid 10px #CCCCCC; width:120px; position:absolute; top:100px; left:30px;"></div>
+                </section>
+                <section style="text-align:center; font-size:23px; color:#7A7A7A">
+                    空白模板
+                </section>
+            </section>-->
+            <!--空白模板End-->
+        </section>
+
+        <!--站位专用-->
+        <div style="height:60px; width:100%;clear:both;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <section id="GetMore" onclick="nextPage()" style="clear:both; height:70px; border:solid 1px #CCC; text-align:center; line-height:70px; font-size:18px; font-weight:900;letter-spacing:5px; cursor:pointer; color:#7F7F7F; border-left:none; border-right:none;">
+            点击查看更多...
+        </section>
+    </article>
+
+
+    <footer style="height:280px; width:100%; margin-top:10px; background-image:url(sysImg/底部导航栏1.jpg);  padding-top:40px; margin-top:60px; ">
+        <section class="shou">
+            <section style="border:solid 1px #ccc; float:left; margin-left:40px; width:300px; height:200px; line-height:50px; text-align:left; padding-left:20px; box-shadow:1px 1px 10px;">
+                <section id="kf">
+                    全国客服免费服务热线：400-888-666<br>
+                    全国座机客服服务热线：81234567<br>
+                    客服Email服务：hahah@hah.com<br>
+                    客服QQ服务：666666<br>
+                </section>
+            </section>
+            <section style=" float:left; margin-left:50px; line-height:35px;">
+                <strong>新手指南</strong>
+                <p>免费学习</p>
+                <p>定制学习</p>
+                <p>使用资源</p>
+                <p>社区讨论</p>
+                <p>资源下载</p>
+            </section>
+            <section style=" float:left; margin-left:10%; line-height:35px;">
+                <strong>帮助中心</strong>
+                <p>技术回答</p>
+                <p>缴费方式</p>
+                <p>VIP权益</p>
+                <p>免费VIP</p>
+                <p>常见问题</p>
+            </section>
+            <section style=" float:left; margin-left:10%; line-height:35px;">
+                <strong>交流合作</strong>
+                <p>关于我们</p>
+                <p>人才招聘</p>
+                <p>联系我们</p>
+                <p>意见反馈</p>
+                <p>友情链接</p>
+            </section>
+            <section style=" float:left; margin-left:10%; line-height:35px;">
+                <strong>其他</strong>
+                <p>人工服务</p>
+                <p>课程需求</p>
+                <p>版权声明</p>
+                <p>服务条款</p>
+                <p>下载APP</p>
+            </section>
+        </section>
+
+        <!--站位专用-->
+        <div style="height:20px; width:100%;clear:both;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <section style="padding-left:20px; line-height:24px; background-image:url(sysImg/底部导航栏2.jpg); height:50px;">
+            <strong>友情链接</strong><br />
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+            <a href="#" style="margin-left:20px; text-decoration:none;">阿里云</a>
+        </section>
+    </footer>
+</body>
+</html>

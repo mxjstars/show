@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/css.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/PublicMethod.js"></script>
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+         * {
+            padding: 0px;
+            margin: 0px;
+            font-family: "Comic Sans MS","幼圆","黑体",sans-serif;
+            color: #666666;
+        }
+    </style>
+    <script>
+        var t = '';
+        $(function () {
+            t = getQueryString('t');//传递过来需要赠送的
+            if (t == "1")
+            {
+                $('#titleText').html('绑定邮箱');
+                $('#emailControl').show();
+                $('#PhoneControl').hide();
+                $('#PwdControl').hide();
+            }
+            if (t == "0") {
+                $('#titleText').html('绑定手机');
+                $('#emailControl').hide();
+                $('#PhoneControl').show();
+                $('#PwdControl').hide();
+            }
+            if (t == "2") {
+                $('#titleText').html('修改密码');
+                $('#emailControl').hide();
+                $('#PhoneControl').hide();
+                $('#PwdControl').show();
+            }
+        });
+        function Out()
+        {
+            //关闭本窗体
+            var close = $('#CloseCover', parent.document);
+            $('#coverDiv', parent.document).remove();
+            $(close).parent().parent().remove();
+        }
+        function yes()
+        {
+            if (t == "1") {
+                var email = $('#emailText').val();
+                var pwd = $('#pwd').val();
+                var pd = { "t": "12", "email": email, "pwd": pwd };
+                $.ajax({
+                    type: "post",
+                    url: "loginOnCheck.do",
+                    data: pd,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == "-1") {
+                            alert('请登录！');
+                        }
+                        else if (data.status == "-2") {
+                            alert('密码错误！');
+                        }
+                        else {
+                            //关闭本窗体
+                            var close = $('#CloseCover', parent.document);
+                            $('#coverDiv', parent.document).remove();
+                            $(close).parent().parent().remove();
+                            window.parent.window.bindText();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+            if (t == "0") {
+                var phone = $('#PhoneText').val();
+                var pwd = $('#pwd').val();
+                var pd = { "t": "13", "phone": phone, "pwd": pwd };
+                $.ajax({
+                    type: "post",
+                    url: "loginOnCheck.do",
+                    data: pd,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == "-1") {
+                            alert('请登录！');
+                        }
+                        else if (data.status == "-2") {
+                            alert('密码错误！');
+                        }
+                        else {
+                            //关闭本窗体
+                            var close = $('#CloseCover', parent.document);
+                            $('#coverDiv', parent.document).remove();
+                            $(close).parent().parent().remove();
+                            window.parent.window.bindText();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+            if (t == "2") {
+                var pwd1 = $('#pwd1').val();
+                var pwd2 = $('#pwd2').val();
+                var pwd = $('#pwd').val();
+                if (pwd1 != pwd2)
+                {
+                    alert('两次输入的密码不相同');
+                    return;
+                }
+                var pd = { "t": "14", "newpwd": pwd1, "pwd": pwd };
+                $.ajax({
+                    type: "post",
+                    url: "loginOnCheck.do",
+                    data: pd,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == "-1") {
+                            alert('请登录！');
+                        }
+                        else if (data.status == "-2") {
+                            alert('密码错误！');
+                        }
+                        else {
+                            //关闭本窗体
+                            var close = $('#CloseCover', parent.document);
+                            $('#coverDiv', parent.document).remove();
+                            $(close).parent().parent().remove();
+                            window.parent.window.bindText();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div >
+        <div id="titleText" style="height:80px; background-color:rgb(240, 240, 240); line-height:80px; padding-left:60px; font-size:22px;">
+            绑定邮箱
+        </div>
+        <div id="emailControl" style="height:80px; line-height:80px; padding-left:100px;">
+            邮箱 <input id="emailText" type="text" style="height:30px; width:200px; margin-left:30px;" />
+        </div>
+        <div id="PhoneControl" style="height:80px; line-height:80px; padding-left:100px;">
+            电话 <input id="PhoneText" type="text" style="height:30px; width:200px; margin-left:30px;" />
+        </div>
+        <div id="PwdControl" style="height:80px; line-height:40px; padding-left:100px;">
+            新的密码 <input id="pwd1" type="text" style="height:30px; width:200px; margin-left:30px;" /><br />
+            再次输入 <input id="pwd2" type="text" style="height:30px; width:200px; margin-left:30px;" />
+        </div>
+        <hr style="height:1px; border:none; border-top:1px solid #eeeeee; margin-top:10px;" />
+        <div style="height:80px; line-height:60px; padding-left:100px;">
+            <div style="font-size:14px; line-height:14px; margin-top:20px; color:rgb(180, 180, 180);">
+                为保障用户账号安全,您需要填写当前登录账号密码
+            </div>
+            密码 <input id="pwd" type="password" style="height:30px; width:200px; margin-left:30px;" />
+        </div>
+        <hr style="height:1px; border:none; border-top:1px solid #eeeeee; margin-top:10px;" />
+        <div>
+            <font style="color:rgb(41, 85, 255); float:right; margin-left:30px; margin-right:100px; cursor:pointer" onclick="yes()">确认</font>
+            <font style="float:right; cursor:pointer" onclick="Out()">取消</font>
+        </div>
+    </div>
+</body>
+</html>

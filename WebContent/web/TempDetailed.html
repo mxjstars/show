@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>模板信息页</title>
+    <meta charset="utf-8" />
+    <link href="css/css.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/PublicMethod.js"></script>
+    <script>
+        var temp_code = '';//主键id
+        function GetId() {
+            temp_code = getQueryString('temp_code');
+        }
+        $(function () {
+            GetId();
+            var pd = { "t": "3", "temp_code": temp_code };
+            $.ajax({
+                type: "post",
+                url: 'get_tsTemps.do',
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    $('#coverImg').attr('src', '' + data.cover);
+                    $('#desDiv').html(data.des);
+                    $('#canshu').html('播放次数:' + data.mouseclick + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设计师:' + data.userName);
+                    $('#moeyDiv').html('价格: &nbsp;' + ((data.money == "0" || data.money == "") ? "免费" : data.money + "&nbsp;元"));
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            $('#yl').attr("src", 'http://' + window.location.host + '/show/web/senceCreate/view.html?c=view&id=' + temp_code + '&preview=preview')
+            
+        });
+        //使用模板
+        function UserTemp()
+        {
+            var pd = { "t": "9", "temp_code": temp_code };
+            $.ajax({
+                type: "post",
+                url: 'Tools/temp.ashx',
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status != "-1") {
+                        window.parent.window.location.href = "http://" + window.location.host + "/show/web/senceCreate/#/scene/create/" + data.status + "?pageId=1";
+                    }
+                    else {
+                        //打开登录
+                        window.parent.EjectIdent('LogIn.html', '欢迎光临，登录系统!', 500, 500);
+                        //关闭本窗体
+                        var close = $('#CloseCover', parent.document);
+                        $('#coverDiv', parent.document).remove();
+                        $(close).parent().parent().remove();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        
+    </script>
+</head>
+<body>
+    <section style="height:650px; width:340px; border:none; float:left; border-radius:0px 0px 0px 20px;">
+        <iframe id="yl" style="height:100%; width:100%; border:none;">
+
+
+        </iframe>
+    </section>
+    <section style="background-color:white; height:650px; width:400px; float:right;border-radius:0px 0px 20px 0px; position:relative;">
+        <div style="margin:0px auto; border:solid 1px; width:300px; height:100px; margin-top:60px;">
+            <img id="coverImg" src="sysImg/logo.jpg" style="width:100px; height:100%; float:left;" />
+            <div id="desDiv" style="float:left;">
+                乱麻七糟的描述
+            </div>
+        </div>
+        <div id="canshu" style="margin:0px auto;  width:300px;">
+            播放次数：250 设计师：有点甜
+        </div>
+        <div style="position:absolute; bottom:30px; left:10px; width:100%;">
+            <div id="moeyDiv" style="float:left;">价格：免费</div>
+            <input type="button" value="使用" onclick="UserTemp()" style="float:right; margin-right:100px;  background-color:#f39800; border:none; width:100px; height:30px; border-radius:5px; cursor:pointer;" />
+        </div>
+    </section>
+</body>
+</html>

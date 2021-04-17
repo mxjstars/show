@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/PublicMethod.js"></script>
+    <script>
+        function GetHy() {
+            var pd = { "t": "1", "Gid": "2" };
+            $.ajax({
+                type: "post",
+                url:"getCJ_listNew.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status != "-1") {
+                        //var dataobj = eval("(" + data.status + ")");
+                        $.each(data.tbCode, function (i, item) {
+                            if (i == 8) {
+                                return false;
+                            }
+                            var title = item.msg;//显示文本
+                            var values = item.codeId;//值
+                            $('#hyselect').append('<option value="' + values + '">' + title + '</option>');
+                        });
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        $(function () {
+            GetHy();
+        });
+        //创建模板
+        function Create() {
+            var hy = $('#hyselect').val();
+            var pd = { 't': '4', 'hyid': hy };
+            $.ajax({
+                type: "post",
+                url: 'createTemp.do',
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == '-1') {
+                        //打开登录
+                        window.parent.EjectIdent('LogIn.html', '欢迎光临，登录系统!', 500, 500);
+                        //关闭本窗体
+                        var close = $('#CloseCover', parent.document);
+                        $('#coverDiv', parent.document).remove();
+                        $(close).parent().parent().remove();
+                    }
+                    else {
+                        window.parent.location.href = "senceCreate/index.html#/scene/create/" + data.status + "?pageId=1";
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <p style="color:rgb(128, 128, 128); font-size:17px; font-weight:800; float:left; margin-left:40px;">选择分类</p>
+    <select id="hyselect" style="float:left; margin-top:10px; height:30px; line-height:30px; width:250px; margin-left:30px; "></select>
+    <section style="clear:both; width:100%; font-size:10px;  ">
+        <p style="color:red; float:left; margin-left:10px;">注意：</p>
+        <p style="float:left;">禁止发布有奖转发,诱导关注,医药,色情.不良风气等场景,查看,详情 &nbsp;</p>
+        <p style="color:red; cursor:pointer; float:left;">审核规则</p>
+    </section>
+    <hr style="border-color:rgb(290, 290, 290); width:100%; border-bottom:none; margin-top:70px; " />
+    <section style="font-size:10px; color:rgb(128, 128, 128);">
+        <input type="button" onclick="Create()" style="color:white; border:none; background-color:rgb(7, 174, 5); height:35px; width:70px; float:right; margin-right:30px; cursor:pointer;" value="创建" />
+    </section>
+</body>
+</html>

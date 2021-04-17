@@ -1,0 +1,204 @@
+﻿* {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Comic Sans MS","微软雅黑",sans-serif;
+    color: #7F7F7F;
+}
+
+input[type=text] {
+    border-style: solid;
+    border-color: rgb(217, 217, 217);
+}
+input[type=password] {
+    border-style: solid;
+    border-color: rgb(217, 217, 217);
+}
+/*轮播图片左右按钮样式*/
+.bennBtn {
+    background-color: rgba(120,120,120,0.5);
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+    top: 140px;
+    border-radius: 60px;
+    cursor: pointer;
+}
+/*行业，场景title 样式*/
+.bennTitle p {
+    display: block;
+    float: left;
+    height: 30px;
+    margin-top: 10px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #666666;
+    z-index: 10;
+    position: relative;
+}
+
+    .bennTitle p:hover {
+        color: #f39800;
+    }
+/*行业更多，场景title 样式*/
+.bennTitleMore p {
+    display: block;
+    float: left;
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #7F7F7F;
+}
+/*全部，免费样式*/
+.ChangeDiv {
+    width: 78px;
+    height: 30px;
+    border: solid 1px #f39800;
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    
+}
+/*模板列表样式*/
+.tempDiv {
+    /*border: solid 1px #BCBCBC;*/
+    width: 180px;
+    height: 250px;
+    margin-left: 50px;
+    float: left;
+    margin-top: 20px;
+    position: relative;
+    cursor: pointer;
+    /*animation: tempkey 4s infinite;
+    animation-timing-function: linear;*/
+    border-radius: 10px;
+    overflow: hidden;
+    text-overflow: clip;
+    background-color:white;
+}
+
+@keyframes tempkey {
+    0% {
+        box-shadow: 2px 2px 10px;
+    }
+
+    50% {
+        box-shadow: 2px 2px 0px;
+    }
+
+    100% {
+        box-shadow: 2px 2px 10px;
+    }
+}
+/*模板列表免费，收费右上角*/
+.tempTopTitle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /*background-color: #f39800;*/
+    width: 0px;
+    text-align: center;
+    height: 0px;
+    line-height: 30px;
+    color:white;
+    border-top:40px solid #f39800;
+    border-right:40px solid transparent;
+    z-index:3;
+}
+.tempTopTitleQ {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /*background-color: #f39800;*/
+    width: 0px;
+    text-align: center;
+    height: 0px;
+    line-height: 30px;
+    color:white;
+    border-top:40px solid red;
+    border-right:40px solid transparent;
+    z-index:3;
+}
+.tempFont {
+    position: absolute;
+    top: -44px;
+    left: 3px;
+    color:white;
+    z-index:4;
+    font-size:14px;
+}
+
+/*模板次数图像*/
+.tempInt {
+    position: absolute;
+    bottom: 15px;
+    width: 20px;
+    height: 20px;
+    background-color: #CCC;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 900;
+    color: #FFF;
+    line-height: 18px;
+}
+/*固定浏览器右下角*/
+.asidDiv {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(83,83,83,0.6);
+    text-align: center;
+    color: #fff;
+    font-size: 17px;
+    line-height: 28px;
+    cursor: pointer;
+}
+/*模板按钮样式*/
+.tempBtm {
+    
+    width: 20px;
+    height: 40px;
+    font-size: 14px;
+    padding-left: 6px;
+    cursor: pointer;
+    float: left;
+    margin-left: 6px;
+}
+    .tempBtm img {
+        width:20px; height:20px;
+    }
+
+#coverDiv {
+    animation: shouTemp 5s 1;
+}
+
+@keyframes shouTemp {
+    from {
+        background-color: rgba(0,0,0,.2);
+    }
+
+    to {
+        background-color: rgba(0,0,0,.9);
+    }
+}
+
+.shou p {
+    cursor: pointer;
+}
+
+.dian {
+    width: 13px;
+    height: 13px;
+    border-radius: 13px;
+    position: absolute;
+    background-color:rgba(0,0,0,.5);
+    cursor: pointer;
+}

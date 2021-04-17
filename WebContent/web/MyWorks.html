@@ -1,0 +1,340 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/Exect.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <link href="css/css.css" rel="stylesheet" />
+    <script src="js/function.js"></script>
+    <title>我的作品</title>
+    <script>
+        var hnagye = 0;
+        //模板鼠标移入
+        function tempMouseOver(DivThis) {
+            $(DivThis).children('div').show();
+        }
+        //模板鼠标移出
+        function tempMouseOut(DivThis) {
+            $(DivThis).children('div').hide();
+        }
+        //获取用户信息
+        function GetUser() {
+            var pd = { "t": "4" };
+            $.ajax({
+                type: "post",
+                url:"getLogin.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status != "-1") {
+                        var userName = data.userName;
+                        var userType = data.userType;
+                        var userTime = data.userTime;
+                        $('#uName').html("用户名: &nbsp;" + userName);
+                        $('#uType').html("用户类型: &nbsp;" + userType);
+                        $('#uTime').html("注册时间: &nbsp;" + userTime);
+                    }
+                    else {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        //获取此人的场景列表
+        var PageInt = 1;//当前页数
+        function GetSenceList(a) {
+            if (a != 1) {
+                $('#senceList').empty();
+                $('#senceList').html('<section id="noneDiv" class="tempDiv" style="height: 255px;" onclick="ClickNone()">' +
+                                        '<section style="height:160px; position:relative;">' +
+                                        '<div style="border:solid 5px #8F9395; height:60px; width:0px; position:absolute; top:60px; left:90px;"></div>' +
+                                        '<div style="border:solid 5px #8F9395; width:50px; position:absolute; top:90px; left:65px;"></div>' +
+                                        '</section>' +
+                                        '<section style="text-align:center; font-size:18px; color:#66667c; font-weight:700;">' +
+                                        '&nbsp;空白模板' +
+                                        '</section>' +
+                                        '</section>');
+                allcount = 0;
+            }
+            
+            var selectStr = $('#selectModel').val();
+            var pd = { "t": "5", "selectStr": selectStr, "hnagye": hnagye, "PageInt": PageInt, "CountRow": "10" };
+            $.ajax({
+                type: "post",
+                url: "getTemp.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status != "-1") {
+                        //var dataobj = eval("(" + data.status + ")");
+                        var htmlSence = '';
+                        var countSence = 0;
+                        $.each(data.tbScene, function (i, item) {
+                            
+                            countSence = i;
+                            $('#senceList').append('<section class="tempDiv" style="height: 255px;" onMouseOver="tempMouseOver(this)" onMouseOut="tempMouseOut(this)">' +
+                                                        '<section style="height:188px; position:relative; margin-left:2px; margin-top:2px;">' +
+                                                            '<img src="' + item.cover + '" style="width:176px; height:176px; border-radius:10px 10px 0px 0px;">' +
+                                                        '</section>' +
+                                                        '<section style="padding-left:10px;">' + item.sceneName + '</section>' +
+                                                        '<section style="font-size:14px; padding-left:10px; padding-right:10px; color:#666; padding-top:10px;">' +
+
+                                                            '<div style="width:100%; height:30px; position:absolute; left:4px; bottom:5px; ">' +
+                                                                '<div class="tempBtm" onclick="yl(\'' + item.sceneId + '\')">' +
+                                                                    '<img src="sysImg/u96.png" title="浏览" />' +
+                                                                '</div>' +
+                                                                '<div class="tempBtm" onclick="bj(\'' + item.sceneCode + '\')">' +
+                                                                     '<img src="sysImg/u98.png" title="编辑" />' +
+                                                                '</div>' +
+                                                                '<div class="tempBtm" onclick="fz(\'' + item.sceneCode + '\')">' +
+                                                                    '<img src="sysImg/u94.png" title="复制" />' +
+                                                                '</div>' +
+                                                                '<div class="tempBtm" onclick="zs(\'' + item.sceneCode + '\')">' +
+                                                                     '<img src="sysImg/u90.png" title="赠送" />' +
+                                                                '</div>' +
+                                                                '<div class="tempBtm" onclick="sc(\'' + item.sceneCode + '\')">' +
+                                                                     '<img src="sysImg/u92.png" title="删除" />' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                        '</section>' +
+                                                        '<div id="qr' + item.sceneCode + '" style="display:none; position:absolute;top:0px;left:0px; ">' +
+
+                                                        '</div>' +
+                                                    '</section>');
+                            var qrcode = new QRCode(document.getElementById("qr" + item.sceneCode), {
+                                width: 180,//设置宽高
+                                height: 180
+                            });
+                            qrcode.makeCode('http://' + window.location.host + '/show/web/senceCreate/view.html?c=view&id=' + item.sceneCode + '&preview=preview');
+                        });
+                        
+                        //$('#seneCount').html(allcount);
+                        if (countSence < 9) {
+                            $('#GetMore').hide();
+                        }
+                        else {
+                            $('#GetMore').show();
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        function nextPage() {
+            PageInt++;
+            GetSenceList(1);
+        }
+        //编辑
+        function bj(a) {
+            window.location.href = "senceCreate/index.html#/scene/create/" + a + "?pageId=1";
+        }
+        //删除
+        function sc(a) {
+            if (confirm("是否确定要删除，无法恢复哦!")) {
+                var pd = { "t": "6", "id": a };
+                $.ajax({
+                    type: "post",
+                    url: "delTemp.do",
+                    data: pd,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status == "-1") {
+                            alert('删除失败，请联系管理员');
+                        }
+                        else {
+                            GetSenceList();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+        }
+        //复制
+        function fz(a) {
+            var pd = { "t": "7", "id": a };
+            $.ajax({
+                type: "post",
+                url:"copeSence.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == "-1") {
+                        alert('复制失败，请联系管理员');
+                    }
+                    else {
+                        GetSenceList();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        //赠送
+        function zs(a) {
+            EjectIdent('GiveSence.html?id=' + a, '', 700, 300);
+        }
+        //预览
+        function yl(a) {
+            EjectIdent('/senceCreate/view.html?c=view&id=' + a + '&preview=preview', '', 320, 650);
+            $('#tdiv').css('border-radius', "50px");
+        }
+
+        //点击空白模板
+        function ClickNone() {
+            //检查是否登录
+            var pd = { "t": "1" };
+            $.ajax({
+                type: "post",
+                url:"loginOnCheck.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == "-1") {
+                        //打开登录
+                        EjectIdent('LogIn.html', '欢迎光临，登录系统!', 500, 500);
+                    }
+                    else {
+                        EjectIdent('SelectHy.html', '新建场景', 500, 200);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function userCenter() {
+            window.location.href = "UserCenter.html";
+        }
+        $(function () {
+            GetUser();
+            GetSenceList();
+            $('#top').load('top.html', function () {
+                $('#webtop').css('background-color', '#fe8a51');
+                $('.mouseHove').css('color', '#fff');
+                $('#createBtn').remove();
+                $('#mylist').css('background-color', '#fe8a51');
+                $('.fontcolor').css('color', '#fff');
+                $('#ToprightSection').css('width', '340px');
+            });
+            $('#footer').load('footer.html');
+            //获取行业
+            GetIndustry('#IndustryDiv');
+            GetCount();
+        });
+       //点击行业
+        function IndustrySelect(InduThis)
+        {
+            PageInt = 1;
+            var value = $(InduThis).attr('value');
+            hnagye = value;
+            var listp = $('#moreIn p');
+            listp.css('background-color', '');
+            listp.css('color', '#666666');
+
+            if ($(InduThis).parent().parent().parent().attr('id') != 'moreIn') {
+                var widthsize = $(InduThis).css('width');//获取点击的宽度
+                widthsize = parseInt(widthsize.replace('px', '')) + 10 + "px";
+                var leftsize = $(InduThis).position().left + 10;//获取左距离
+                var fdc = $('#fdbg');//获取浮动层
+                $('#fdbg').css('background-color', '#f39800');
+                fdc.animate({
+                    left: leftsize + "px",
+                    width: widthsize,
+                }, 300, function () {
+                    $(InduThis).css("color", "#fff");
+                });
+            }
+            else {
+                $('#fdbg').css('background-color', '');
+                $(InduThis).css('background-color', '#f39800');
+                $(InduThis).css("color", "#fff");
+            }
+            GetSenceList();
+        }
+        //获取数量
+        function GetCount()
+        {
+            var pd = { "t": "10"};
+            $.ajax({
+                type: "post",
+                url:"getCount.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status != "-1") {
+                        $('#seneCount').html(data.status);
+                    }
+                }
+            });
+        }
+    </script>
+    <style>
+        input::-webkit-input-placeholder {
+            color: #666666;
+            font-size: 14px;
+            line-height: 17px;
+        }
+    </style>
+</head>
+
+<body style="min-width:1000px; background-color:#f6f9f8;">
+    <!--头部-->
+    <div id="top" style="width:100%; height:60px; border:none; z-index:20; min-width:1300px; position:absolute; top:0px; left:0px; "></div>
+    <!--<iframe id="top" src="top.html" style="box-shadow:2px 3px 15px; width:100%; height:60px; border:none; z-index:100; min-width:1300px;">您的浏览器不支持iframe</iframe>-->
+    <section style="width:100%; height:170px; margin-top:60px; min-width:1300px;">
+        <section style="float:left; height:100%; width:150px; margin-left:100px;">
+            <img src="userHead/t.jpg" style="height:120px; width:120px; cursor:pointer; border-radius:150px; margin-top:20px;" onclick="userCenter()" />
+        </section>
+        <section style="float:left; height:100%; width:350px; margin-left:100px; font-size:17px; position:relative">
+            <section style="height:10px;">&nbsp;</section>
+            <section id="uName" style="margin-top:20px;">用户名：</section>
+            <section id="uType" style="margin-top:15px;">用户类型：</section>
+            <section id="uTime" style="margin-top:15px;">注册时间：</section>
+            <input type="button" onclick="userCenter()" style="border:1px solid #fe8a51; cursor:pointer; background-color:rgba(0,0,0,0); color:#fe8a51; width:80px; height:35px; position:absolute; top:30px; left:250px; font-size:17px; border-radius:5px;" value="修改" />
+        </section>
+        <section style="float:right;  cursor:pointer;">
+            <input type="button" value="创建作品" style="width:150px; height:60px; margin-top:50px; margin-right:150px; border:none; background-color:#fe8a51; color:white; font-size:20px; border-radius:10px;" onclick="ClickNone()" />
+        </section>
+    </section>
+    <div style="background-color:white; height:20px; width:100%;"></div>
+    <section style="margin:15px auto; width:80%; min-width:1300px;">
+        <section style="float:left;">
+            <section style="margin-left:55px; color:#666666; font-size:15px;">共有场景 <font id="seneCount" style="color:#fe8a51; font-size:19px;">0</font> 个</section>
+        </section>
+        <div style="float:right;  position:relative; margin-right:150px;">
+            <input id="selectModel" type="text" style="border:1px solid #f39800; width:400px; height:30px; border-radius:30px; padding-left:20px;" maxlength="21" placeholder="请输入模板标题关键字" />
+            <img src="sysImg/tupian1.png" onclick="GetSenceList()" style="width:18px; height:18px; position:absolute; left:380px; top:7px; cursor:pointer;">
+        </div>
+        <section style="float:right; margin-right:20px; position:relative; cursor:pointer;">
+            <section style="margin-left:40px; color:#666666; font-size:18px; font-size:15px; " onMouseOver="IndustryOverp(this)" onMouseOut="IndustryOutp(this)">所属行业 <img src="sysImg/xiaoqiu.png" style="transform:rotate(180deg)" /> </section>
+            <section id="moreIn" style="position:absolute; left:50px; top:-20px;"></section>
+        </section>
+    </section>
+    <section id="senceList" style="margin:0px auto; width:80%; min-width:1300px; clear:both;">
+        
+        <!--空白模板-->
+        <section id="noneDiv" class="tempDiv">
+            <section style="height:210px; position:relative;">
+                <div style="border:solid 10px #CCCCCC; height:120px; width:0px; position:absolute; top:40px; left:90px;"></div>
+                <div style="border:solid 10px #CCCCCC; width:120px; position:absolute; top:100px; left:30px;"></div>
+            </section>
+            <section style="text-align:center; font-size:23px; color:#7A7A7A">
+                创建作品
+            </section>
+        </section>
+        <!--空白模板End-->
+        <!--普通模板-->
+        
+    </section>
+    <div style="height:60px; width:100%;clear:both;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <section id="GetMore" onclick="nextPage()" style="clear:both; height:70px; border:solid 1px #CCC; text-align:center; line-height:70px; font-size:18px; font-weight:900;letter-spacing:5px; cursor:pointer; color:#7F7F7F; border-left:none; border-right:none;">
+        点击查看更多...
+    </section>
+    <!--  <div id="footer" style="position:absolute; bottom:0px; width:100%;"></div> -->
+</body>
+</html>

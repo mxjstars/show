@@ -1,0 +1,190 @@
+<div class="create-bg" style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;background-color: #d0cfd8"></div>
+<div class="creat_head">
+
+    <div class="creat_head_con clearfix">
+
+        <div class="creat_logo">
+            <a href="#/main" class="hint--bottom hint--rounded" data-hint="返回我的场景" ng-click="stopCopy()"><img
+                    ng-src="http://localhost/static/img/logo-my.png"/></a>
+        </div>
+        <div class="creat_con clearfix">
+
+            <ul class="comp_panel clearfix">
+
+                <li comp-draggable="panel" ctype="2" class="comp-draggable text hint--bottom hint--rounded"
+                    data-hint="点击添加文本" ng-click="createComp('2');"><span class="eqf-top-word"></span> <span>文本</span>
+                </li>
+                <li comp-draggable="panel" ctype="3" class="comp-draggable bg hint--bottom hint--rounded"
+                    data-hint="点击添加背景" ng-click="createComp('3');"><span class="eqf-top-background"></span>
+                    <span>背景</span></li>
+                <li comp-draggable="panel" ctype="9" class="comp-draggable music hint--bottom hint--rounded"
+                    data-hint="点击添加音乐" ng-click="createComp('9');"><span class="eqf-top-music"></span> <span>音乐</span>
+                </li>
+                <li comp-draggable="panel" ctype="4" class="comp-draggable image hint--bottom hint--rounded"
+                    data-hint="点击添加图片" ng-click="createComp('4');"><span class="eqf-top-pic"></span> <span>图片</span>
+                </li>
+            </ul>
+        </div>
+        <div class="create-action">
+
+            <ul>
+
+                <li class="act-border save hint--bottom hint--rounded" data-hint="点击保存场景" ng-click="saveScene(true)">
+                    <span class="eqf-top-svae"></span> <span class="create-save">保存</span></li>
+                <li class="act-border setting hint--bottom hint--rounded" ng-class="{\'active\': sceneSetting.showFlag}"
+                    data-hint="点击预览场景" ng-click="sceneSetting.showFlag=!sceneSetting.showFlag"><span
+                        class="eqf-scene-settingII"></span> <span class="create-setting">发布</span></li>
+                <li class="publish hint--bottom hint--rounded" data-hint="点击预览场景" ng-click="test0100()"><span
+                        class="eqf-scene-send"></span> <span class="create-publish">预览</span></li>
+                <li class="act-border quit hint--bottom hint--rounded" data-hint="点击退出场景"><span
+                        class="eqf-top-quite"></span> <span class="create-quit">退出</span></li>
+            </ul>
+        </div>
+        <div ng-hide="showToolBar();">
+
+            <div ng-show="isEditor" style="position: absolute;right: 225px;top: 20px;">
+
+                <select ng-model="tpl.obj.scene.isTpl">
+                    <option value="0">非模板</option>
+                    <option value="1">保存为pc模板</option>
+                    <option value="2">保存为移动端模板</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="create_scene">
+
+    <div class="main clearfix" mouse-comp-select="">
+
+        <div class="content">
+
+            <div class="phoneBox" multi-comp-drag="">
+
+                <div edit-common="" edit-keymap="">
+
+                    <div class="top"></div>
+                    <div class="phone_menubar"></div>
+                    <div class="scene_title_baner">
+
+                        <div ng-bind="tpl.obj.scene.name" class="scene_title"></div>
+                    </div>
+                    <div class="nr sortable" id="nr" element-anim="" paste-element=""></div>
+                    <div class="bottom"></div>
+                    <div class="tips">
+                        为了获得更好的使用，建议使用谷歌浏览器（chrome）、360浏览器、IE11浏览器。
+                    </div>
+                </div>
+                <div class="phone_texiao">
+
+                    <div id="editBG" style="height:70px;" ng-show="controlView.showBgTag">
+
+                        <span class="hint--right hint--rounded" data-hint="更换背景"
+                              ng-click="replaceBg(currentBgDef)">背景</span>
+                        <!-- <div style="margin:10px 0;border-bottom: 2px solid #666;"></div> 					<a style = "color: #666;" class="hint--bottom hint--rounded" data-hint="删除当前页面的背景"> 						<span ng-click="removeBG($event)" class="eqf-wrong"></span> 					</a> -->
+                        <a style="color: #666; margin-top: 10px;" class="hint--bottom hint--rounded"
+                           data-hint="编辑当前页面的背景"> <span ng-click="showEditBgPanel()" class="eqf-scene-settingII"></span>
+                        </a>
+
+                        <div class="manage-bg" style="display: none;margin-top: 5px;" ng-controller="editBgCtrl"
+                             ng-include="\'scene/edit/editbg/editbg.tpl.html\'">
+
+                        </div>
+                    </div>
+                    <div id="editBGAudio" ng-click="openAudioModal()" ng-show="tpl.obj.scene.bgAudio">
+
+                        <span class="hint--right hint--rounded" data-hint="更换音乐">音乐</span>
+                        <!-- <div style="margin:10px 0;border-bottom: 2px solid #666;"></div> -->
+                        <a style="color: #666; margin-top: 10px;" class="hint--bottom hint--rounded"
+                           data-hint="删除当前页面的音乐"><span ng-click="removeBGAudio($event)" class="eqf-wrong"></span></a>
+                    </div>
+                    <div id="editScratch" ng-click="openPageEffectModal(tpl.obj.properties)"
+                         ng-show="tpl.obj.properties">
+
+                        <span class="hint--right hint--rounded" data-hint="更换特效">{{effectName}}</span>
+                        <!-- <div style="margin:10px 0;border-bottom: 2px solid #666;"></div> -->
+                        <a style="color: #666; margin-top: 10px;" class="hint--bottom hint--rounded"
+                           data-hint="删除当前页面特效"><span ng-click="removeScratch($event)" class="eqf-wrong"></span></a>
+                    </div>
+                </div>
+                <div class="history">
+
+                    <a data-hint="撤销(ctrl+z)" class="hint--left hint--rounded" ng-click="back()"><i class="eqf-bg"
+                                                                                                    ng-class="{active: canBack}"></i></a>
+                    <a data-hint="恢复(ctrl+y)" class="hint--left hint--rounded" ng-click="forward()"><i class="eqf-back"
+                                                                                                       ng-class="{active: canForward}"></i></a>
+                    <a data-hint="刷新预览" class="hint--left hint--rounded" style="margin-top:10px;"
+                       ng-click="refreshPage(tpl.obj, pageNum, $event)"><i class="eqf-eye2"></i></a>
+                    <!--<a data-hint="网格设置" class="hint--left hint--rounded grid-guide" style="margin-top:10px;"
+                       ng-click="gridGuideSetting.showFlag = !gridGuideSetting.showFlag"><i class="eqf-wangge"
+                                                                                            ng-class="{\'active\': gridGuideSetting.isGridEnabled}"></i></a>
+-->
+                    <!--<div class="grid-guide-container" ng-class="{\'on\': gridGuideSetting.showFlag}"
+                         grid-guide-setting=""></div>-->
+                </div>
+            </div>
+            <div id="containment" class="create_right">
+
+                <div class="guanli">
+                    页面管理
+                </div>
+                <div class="nav_top">
+
+                    <div class="nav_top_list">
+
+                        <a ng-click="duplicatePage()" class="hint--bottom hint--rounded" data-hint="复制当前页面">复制</a>
+                        <a ng-click="creatCompanyTemplate()" class="hint--bottom hint--rounded" data-hint="当前页存为企业模板"
+                           ng-show="userProperty.type ==2">企业模版</a>
+                        <a class="hint--bottom hint--rounded" data-hint="删除当前页" ng-click="deletePage($event)"
+                           ng-show="pages.length != 1">删除</a>
+                    </div>
+                </div>
+                <div class="nav_content">
+
+                    <ul id="pageList" ui-sortable="sortableOptions" ng-model="pages">
+
+                        <li class="blurClass" ng-repeat="page in pages track by $index"
+                            ng-click="navTo(page, $index, $event)" ng-init="editableStatus[$index] = false"
+                            ng-class="{current: pageNum-1 == $index}" blur-children=""><span
+                                style="float: left; margin-top: 17px; background: #fff; color: #666; font-weight: 200;border-radius:9px;width:18px;height:18px;padding:0px;text-align:center;line-height:18px;"
+                                class="badge">{{$index+1}}</span> <span style="margin-left: 17px;font-size:14px;"
+                                                                        class="hint--bottom hint--rounded"
+                                                                        data-hint="点击重命名"
+                                                                        ng-click="editableStatus[$index] = true"
+                                                                        ng-show="!editableStatus[$index]">{{page.name}}</span>
+                            <input style="width: 80px; height: 25px; line-height: 25px; margin-left: 10px; color: #999;"
+                                   type="text" ng-model="page.name" ng-show="editableStatus[$index]"
+                                   ng-blur="editableStatus[$index] = false;savePageNames(page, $index)"
+                                   ng-focus="getOriginPageName(page)" maxlength="7" custom-focus=""
+                                   stop-propagation=""/></li>
+                    </ul>
+                    <div class="page-list-label" ng-show="isEditor &amp;&amp; pageList == true">
+
+                        <label ng-repeat="allchild in pageLabelAll"> <input type="checkbox" name="" value=""
+                                                                            ng-model="allchild.ischecked"/>{{allchild.name}}
+                        </label>
+
+                        <div class="select-labels">
+
+                            <a ng-click="pageChildLabel()">确定</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav_bottom">
+
+                    <a ng-click="insertPage()" class="hint--bottom hint--rounded" data-hint="添加一页">+</a>
+                    <!--  <a ng-click="duplicatePage()" class="duplicate_page">复制一页</a> -->
+                </div>
+                <div ng-show="isEditor" style="position: absolute;bottom: 20px;right: 268px;width: 100px;">
+
+                    <div class="btn-main" style="width: 100px;" ng-click="chooseThumb()">
+                        选择本页缩略图
+                    </div>
+                    <img width="100" ng-src="{{PREFIX_FILE_HOST + tpl.obj.properties.thumbSrc}}"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="scene-setting" ng-if="sceneSetting.showFlag" scene-setting-component=""></div>
+</div>

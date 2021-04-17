@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mingrisoft.dao.TbSceneMapper">
+	<resultMap id="BaseResultMap" type="com.mingrisoft.model.TbScene">
+		<id column="scene_id" property="sceneId" jdbcType="INTEGER" />
+		<result column="scene_name" property="sceneName" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="state_code_id" property="stateCodeId" jdbcType="INTEGER" />
+		<result column="visit_num" property="visitNum" jdbcType="INTEGER" />
+		<result column="use_num" property="useNum" jdbcType="INTEGER" />
+		<result column="dic_code_id" property="dicCodeId" jdbcType="INTEGER" />
+		<result column="cover" property="cover" jdbcType="VARCHAR" />
+		<result column="scene_custom_id" property="sceneCustomId"
+			jdbcType="INTEGER" />
+		<result column="js_file_id" property="jsFileId" jdbcType="INTEGER" />
+		<result column="css_file_id" property="cssFileId" jdbcType="INTEGER" />
+		<result column="scene_code" property="sceneCode" jdbcType="VARCHAR" />
+		<result column="sh" property="sh" jdbcType="INTEGER" />
+		<result column="tj" property="tj" jdbcType="INTEGER" />
+		<result column="musicUrl" property="musicurl" jdbcType="VARCHAR" />
+		<result column="videoUrl" property="videourl" jdbcType="VARCHAR" />
+		<result column="movietype" property="movietype" jdbcType="INTEGER" />
+		<result column="qrCode" property="qrcode" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="VARCHAR" />
+		<result column="userNum" property="usernum" jdbcType="INTEGER" />
+		<result column="MouseClick" property="mouseclick" jdbcType="INTEGER" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="scene_typeid" property="sceneTypeid" jdbcType="INTEGER" />
+		<result column="Modeled" property="modeled" jdbcType="INTEGER" />
+		<result column="fileType" property="filetype" jdbcType="VARCHAR" />
+		<result column="x" property="x" jdbcType="INTEGER" />
+		<result column="y" property="y" jdbcType="INTEGER" />
+		<result column="w" property="w" jdbcType="INTEGER" />
+		<result column="h" property="h" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		scene_id, scene_name, addtime, state_code_id, visit_num, use_num, dic_code_id,
+		cover,
+		scene_custom_id, js_file_id, css_file_id, scene_code, sh, tj, musicUrl, videoUrl,
+		movietype, qrCode, author, userNum, MouseClick, des, scene_typeid,
+		Modeled, fileType,
+		x, y, w, h
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_scene
+		where scene_id = #{sceneId,jdbcType=INTEGER}
+	</select>
+	<select id="selectBySceneCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tb_scene
+		where scene_code = #{sceneCode,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_scene
+		where scene_id = #{sceneId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.mingrisoft.model.TbScene">
+		insert into tb_scene (scene_id, scene_name, addtime,
+		state_code_id, visit_num, use_num,
+		dic_code_id, cover, scene_custom_id,
+		js_file_id, css_file_id, scene_code,
+		sh, tj, musicUrl, videoUrl,
+		movietype, qrCode, author,
+		userNum, MouseClick, des,
+		scene_typeid, Modeled, fileType,
+		x, y, w, h
+		)
+		values (#{sceneId,jdbcType=INTEGER}, #{sceneName,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP},
+		#{stateCodeId,jdbcType=INTEGER}, #{visitNum,jdbcType=INTEGER}, #{useNum,jdbcType=INTEGER},
+		#{dicCodeId,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR},
+		#{sceneCustomId,jdbcType=INTEGER},
+		#{jsFileId,jdbcType=INTEGER}, #{cssFileId,jdbcType=INTEGER}, #{sceneCode,jdbcType=VARCHAR},
+		#{sh,jdbcType=INTEGER}, #{tj,jdbcType=INTEGER},
+		#{musicurl,jdbcType=VARCHAR}, #{videourl,jdbcType=VARCHAR},
+		#{movietype,jdbcType=INTEGER}, #{qrcode,jdbcType=VARCHAR},
+		#{author,jdbcType=VARCHAR},
+		#{usernum,jdbcType=INTEGER}, #{mouseclick,jdbcType=INTEGER}, #{des,jdbcType=VARCHAR},
+		#{sceneTypeid,jdbcType=INTEGER}, #{modeled,jdbcType=INTEGER},
+		#{filetype,jdbcType=VARCHAR},
+		#{x,jdbcType=INTEGER}, #{y,jdbcType=INTEGER}, #{w,jdbcType=INTEGER}, #{h,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.mingrisoft.model.TbScene">
+		insert into tb_scene
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sceneId != null">
+				scene_id,
+			</if>
+			<if test="sceneName != null">
+				scene_name,
+			</if>
+			<if test="addtime != null">
+				addtime,
+			</if>
+			<if test="stateCodeId != null">
+				state_code_id,
+			</if>
+			<if test="visitNum != null">
+				visit_num,
+			</if>
+			<if test="useNum != null">
+				use_num,
+			</if>
+			<if test="dicCodeId != null">
+				dic_code_id,
+			</if>
+			<if test="cover != null">
+				cover,
+			</if>
+			<if test="sceneCustomId != null">
+				scene_custom_id,
+			</if>
+			<if test="jsFileId != null">
+				js_file_id,
+			</if>
+			<if test="cssFileId != null">
+				css_file_id,
+			</if>
+			<if test="sceneCode != null">
+				scene_code,
+			</if>
+			<if test="sh != null">
+				sh,
+			</if>
+			<if test="tj != null">
+				tj,
+			</if>
+			<if test="musicurl != null">
+				musicUrl,
+			</if>
+			<if test="videourl != null">
+				videoUrl,
+			</if>
+			<if test="movietype != null">
+				movietype,
+			</if>
+			<if test="qrcode != null">
+				qrCode,
+			</if>
+			<if test="author != null">
+				author,
+			</if>
+			<if test="usernum != null">
+				userNum,
+			</if>
+			<if test="mouseclick != null">
+				MouseClick,
+			</if>
+			<if test="des != null">
+				des,
+			</if>
+			<if test="sceneTypeid != null">
+				scene_typeid,
+			</if>
+			<if test="modeled != null">
+				Modeled,
+			</if>
+			<if test="filetype != null">
+				fileType,
+			</if>
+			<if test="x != null">
+				x,
+			</if>
+			<if test="y != null">
+				y,
+			</if>
+			<if test="w != null">
+				w,
+			</if>
+			<if test="h != null">
+				h,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sceneId != null">
+				#{sceneId,jdbcType=INTEGER},
+			</if>
+			<if test="sceneName != null">
+				#{sceneName,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="stateCodeId != null">
+				#{stateCodeId,jdbcType=INTEGER},
+			</if>
+			<if test="visitNum != null">
+				#{visitNum,jdbcType=INTEGER},
+			</if>
+			<if test="useNum != null">
+				#{useNum,jdbcType=INTEGER},
+			</if>
+			<if test="dicCodeId != null">
+				#{dicCodeId,jdbcType=INTEGER},
+			</if>
+			<if test="cover != null">
+				#{cover,jdbcType=VARCHAR},
+			</if>
+			<if test="sceneCustomId != null">
+				#{sceneCustomId,jdbcType=INTEGER},
+			</if>
+			<if test="jsFileId != null">
+				#{jsFileId,jdbcType=INTEGER},
+			</if>
+			<if test="cssFileId != null">
+				#{cssFileId,jdbcType=INTEGER},
+			</if>
+			<if test="sceneCode != null">
+				#{sceneCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sh != null">
+				#{sh,jdbcType=INTEGER},
+			</if>
+			<if test="tj != null">
+				#{tj,jdbcType=INTEGER},
+			</if>
+			<if test="musicurl != null">
+				#{musicurl,jdbcType=VARCHAR},
+			</if>
+			<if test="videourl != null">
+				#{videourl,jdbcType=VARCHAR},
+			</if>
+			<if test="movietype != null">
+				#{movietype,jdbcType=INTEGER},
+			</if>
+			<if test="qrcode != null">
+				#{qrcode,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				#{author,jdbcType=VARCHAR},
+			</if>
+			<if test="usernum != null">
+				#{usernum,jdbcType=INTEGER},
+			</if>
+			<if test="mouseclick != null">
+				#{mouseclick,jdbcType=INTEGER},
+			</if>
+			<if test="des != null">
+				#{des,jdbcType=VARCHAR},
+			</if>
+			<if test="sceneTypeid != null">
+				#{sceneTypeid,jdbcType=INTEGER},
+			</if>
+			<if test="modeled != null">
+				#{modeled,jdbcType=INTEGER},
+			</if>
+			<if test="filetype != null">
+				#{filetype,jdbcType=VARCHAR},
+			</if>
+			<if test="x != null">
+				#{x,jdbcType=INTEGER},
+			</if>
+			<if test="y != null">
+				#{y,jdbcType=INTEGER},
+			</if>
+			<if test="w != null">
+				#{w,jdbcType=INTEGER},
+			</if>
+			<if test="h != null">
+				#{h,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.mingrisoft.model.TbScene">
+		update tb_scene
+		<set>
+			<if test="sceneName != null">
+				scene_name = #{sceneName,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="stateCodeId != null">
+				state_code_id = #{stateCodeId,jdbcType=INTEGER},
+			</if>
+			<if test="visitNum != null">
+				visit_num = #{visitNum,jdbcType=INTEGER},
+			</if>
+			<if test="useNum != null">
+				use_num = #{useNum,jdbcType=INTEGER},
+			</if>
+			<if test="dicCodeId != null">
+				dic_code_id = #{dicCodeId,jdbcType=INTEGER},
+			</if>
+			<if test="cover != null">
+				cover = #{cover,jdbcType=VARCHAR},
+			</if>
+			<if test="sceneCustomId != null">
+				scene_custom_id = #{sceneCustomId,jdbcType=INTEGER},
+			</if>
+			<if test="jsFileId != null">
+				js_file_id = #{jsFileId,jdbcType=INTEGER},
+			</if>
+			<if test="cssFileId != null">
+				css_file_id = #{cssFileId,jdbcType=INTEGER},
+			</if>
+			<if test="sceneCode != null">
+				scene_code = #{sceneCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sh != null">
+				sh = #{sh,jdbcType=INTEGER},
+			</if>
+			<if test="tj != null">
+				tj = #{tj,jdbcType=INTEGER},
+			</if>
+			<if test="musicurl != null">
+				musicUrl = #{musicurl,jdbcType=VARCHAR},
+			</if>
+			<if test="videourl != null">
+				videoUrl = #{videourl,jdbcType=VARCHAR},
+			</if>
+			<if test="movietype != null">
+				movietype = #{movietype,jdbcType=INTEGER},
+			</if>
+			<if test="qrcode != null">
+				qrCode = #{qrcode,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				author = #{author,jdbcType=VARCHAR},
+			</if>
+			<if test="usernum != null">
+				userNum = #{usernum,jdbcType=INTEGER},
+			</if>
+			<if test="mouseclick != null">
+				MouseClick = #{mouseclick,jdbcType=INTEGER},
+			</if>
+			<if test="des != null">
+				des = #{des,jdbcType=VARCHAR},
+			</if>
+			<if test="sceneTypeid != null">
+				scene_typeid = #{sceneTypeid,jdbcType=INTEGER},
+			</if>
+			<if test="modeled != null">
+				Modeled = #{modeled,jdbcType=INTEGER},
+			</if>
+			<if test="filetype != null">
+				fileType = #{filetype,jdbcType=VARCHAR},
+			</if>
+			<if test="x != null">
+				x = #{x,jdbcType=INTEGER},
+			</if>
+			<if test="y != null">
+				y = #{y,jdbcType=INTEGER},
+			</if>
+			<if test="w != null">
+				w = #{w,jdbcType=INTEGER},
+			</if>
+			<if test="h != null">
+				h = #{h,jdbcType=INTEGER},
+			</if>
+		</set>
+		where scene_id = #{sceneId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.mingrisoft.model.TbScene">
+		update tb_scene
+		set scene_name = #{sceneName,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		state_code_id = #{stateCodeId,jdbcType=INTEGER},
+		visit_num = #{visitNum,jdbcType=INTEGER},
+		use_num = #{useNum,jdbcType=INTEGER},
+		dic_code_id = #{dicCodeId,jdbcType=INTEGER},
+		cover = #{cover,jdbcType=VARCHAR},
+		scene_custom_id = #{sceneCustomId,jdbcType=INTEGER},
+		js_file_id = #{jsFileId,jdbcType=INTEGER},
+		css_file_id = #{cssFileId,jdbcType=INTEGER},
+		scene_code = #{sceneCode,jdbcType=VARCHAR},
+		sh = #{sh,jdbcType=INTEGER},
+		tj = #{tj,jdbcType=INTEGER},
+		musicUrl = #{musicurl,jdbcType=VARCHAR},
+		videoUrl = #{videourl,jdbcType=VARCHAR},
+		movietype = #{movietype,jdbcType=INTEGER},
+		qrCode = #{qrcode,jdbcType=VARCHAR},
+		author = #{author,jdbcType=VARCHAR},
+		userNum = #{usernum,jdbcType=INTEGER},
+		MouseClick = #{mouseclick,jdbcType=INTEGER},
+		des = #{des,jdbcType=VARCHAR},
+		scene_typeid = #{sceneTypeid,jdbcType=INTEGER},
+		Modeled = #{modeled,jdbcType=INTEGER},
+		fileType = #{filetype,jdbcType=VARCHAR},
+		x = #{x,jdbcType=INTEGER},
+		y = #{y,jdbcType=INTEGER},
+		w = #{w,jdbcType=INTEGER},
+		h = #{h,jdbcType=INTEGER}
+		where scene_id = #{sceneId,jdbcType=INTEGER}
+	</update>
+
+
+	<select id="queryTempList" resultMap="BaseResultMap"
+		parameterType="com.mingrisoft.model.TbScene">
+		select
+		<include refid="Base_Column_List" />
+		from tb_scene
+		<where>
+			(1=1)
+			<if test="author!=null and author!=''">
+				and author = #{author,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by scene_id
+	</select>
+	
+	<select id="getTemp" resultMap="BaseResultMap"
+		parameterType="com.mingrisoft.model.TbScene">
+		select
+		<include refid="Base_Column_List" />
+		from tb_scene
+		<where>
+			(1=1)
+			<if test="record.author!=null and record.author!=''">
+				and author = #{record.author,jdbcType=VARCHAR}
+			</if>
+			<if test="record.sceneName!=null and record.sceneName!=''">
+				and scene_name like concat(concat('%',#{record.sceneName}),'%')
+			</if>
+			<if test="record.sceneCustomId!=null and record.sceneCustomId!=''">
+				and scene_custom_id = #{record.sceneCustomId,jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by scene_id desc LIMIT #{offset},#{limit}
+	</select>
+
+</mapper>

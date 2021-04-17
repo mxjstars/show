@@ -1,0 +1,278 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/Exect.js"></script>
+    <title>顶页</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-family: "Comic Sans MS","微软雅黑",sans-serif;
+        }
+
+        #ToprightSection {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 60px;
+            color: #666666;
+        }
+        .mouseHove {
+         color:#fff;
+        }
+        .mouseHove:hover {
+            color:#f39800;
+        }
+    </style>
+    <script>
+        $(function () {
+            //初始化检索
+            $('#serachText').val(getCookie('serachStr'));
+            setCookie('serachStr', '');
+            if ($('#serachText').val() != '') {
+
+                window.parent.SerachStr = $('#serachText').val();
+                window.parent.GetContext();
+            }
+            //初始化登录信息
+            var pd = { "t": "1" };
+            $.ajax({
+                type: "post",
+                url: "loginOnCheck.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == "-1") {
+                        $('#createBtn').hide();
+                        $('#loginBtn').show();
+                        $('#freeModel').show();
+                        $('#regionBtn').show();
+                        $('#out').hide();
+                        $('#headImg').hide();
+                        $('#headDiv').hide();
+                        $('#headXf').hide();
+                        $('#sx').show();
+                    }
+                    else {
+                        $('#loginBtn').remove();
+                        $('#createBtn').show();
+                        $('#freeModel').show();
+                        $('#regionBtn').remove();
+                        $('#out').show();
+                        $('#headImg').show();
+                        $('#headDiv').show();
+                        $('#headXf').show();
+                       
+                        $('#sx').remove();
+                        GetImgHead();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+        //设置coke
+        function setCookie(name, value) {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        }
+        //获取coke
+        function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+        //查询模板
+        function Serach() {
+            var serachStr = $('#serachText').val();
+            if ($(window.parent.document).find('#ContentDiv').length == 1) {
+                //证明这个是在有模板搜索的窗体的
+                //存入到coke中
+                setCookie('serachStr', serachStr);
+
+                window.parent.SerachStr = $('#serachText').val();
+                window.parent.serach();
+            }
+            else {
+                window.parent.document.location.href = "index.html";
+            }
+        }
+        //跳转到主页
+        function Rehref() {
+            window.parent.document.location.href = "index.html";
+        }
+        //我的作品
+        function Myprogect() {
+            //检查是否登录
+            var pd = { "t": "1" };
+            $.ajax({
+                type: "post",
+                url: "loginOnCheck.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == "-1") {
+                        ClickLogin();
+                    }
+                    else {
+                        window.parent.document.location.href = "MyWorks.html";
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        //点击登录
+        function ClickLogin() {
+            Eject('LogIn.html', '欢迎光临，登录系统!', 500, 500);
+        }
+        //点击注册
+        function Clickregion() {
+            Eject('Register.html', '欢迎光临，注册系统!', 500, 500);
+        }
+        //点击创作
+        function ClickCreate() {
+            var pd = { "t": "1" };
+            $.ajax({
+                type: "post",
+                url: "loginOnCheck.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == "-1") {
+                        wClickLogin();
+                    }
+                    else {
+                        window.parent.document.location.href = "SelectTemp.html";
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        //退出
+        function out() {
+            window.location.href = "out.html";
+        }
+        //获取头像
+        function GetImgHead() {
+            var pd = { "t": "6" };
+            $.ajax({
+                type: "post",
+                url: "getHeadImg.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                	console.log(data.status);
+                    if (data.status != null) {
+                        $("#headImg").attr("src", data.status);
+                    }
+                    else{
+                    	$("#headImg").attr("src", userHead/t.png);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        function userCenter() {
+            window.location.href = "UserCenter.html";
+        }
+        function logo() {
+            window.location.href = "index.html";
+        }
+    </script>
+    <style>
+        /*#logo {
+            animation: topAnim 3s infinite;
+            animation-timing-function: linear;
+        }*/
+
+        @keyframes topAnim {
+            0% {
+                position:absolute;
+                top:0px;
+                left:0px;
+            }
+
+            50% {
+                position:absolute;
+                top:0px;
+                left:50px;
+            }
+            100% {
+                position:absolute;
+                top:0px;
+                left:0px;
+            }
+        }
+        #serachText::-webkit-input-placeholder {
+            color:white;
+            font-size:15px;
+            line-height:17px;
+        }
+
+        #headDiv {
+        width:100px; height:40px;  float:right; margin-right:20px; margin-top:10px; border-radius:5px; 
+        transition:all 0.4s;
+        overflow:hidden; text-overflow:clip; overflow:hidden;
+        color:white;
+        text-align:center;
+        font-size:16px;
+        line-height:31px;
+        }
+        #headDiv:hover {
+            height:150px;
+            background-position-x:10px;
+            
+        }
+        .fontcolor {
+        margin:0px auto; color:white; cursor:pointer;
+        }
+            .fontcolor:hover {
+            color:#f39800;
+            }
+    </style>
+</head>
+
+<body>
+    <section id="webtop" style="background-color:rgba(0,0,0,.5); width:100%; height:60px; min-width:1000px;  ">
+        <section id="logo" style="float:left; font-weight:900; color:#4D4D4D; text-shadow:5px 2px 15px; font-size:38px; line-height:60px; margin-left:5%;">
+            <img src="sysImg/logo.png" onclick="logo()"/>
+        </section>
+        <section style="float:left; margin-left:15%; position:relative;">
+            <img src="sysImg/tupian1.png" onclick="Serach()" style="width:25px; height:25px; position:absolute; left:453px; top:15px; cursor:pointer;">
+            <input id="serachText" type="text" style="border:1px solid #fff; border-radius:20px; background-color:rgba(255,255,255,.2); border-width:1px; height:40px; width:430px; margin-top:8px; padding-left:10px; padding-right:50px; color:white;" placeholder="请输入标题模板关键字" maxlength="21" />
+        </section>
+        <section id="ToprightSection" style="float:right; width:410px;">
+
+
+            <p class="mouseHove" id="freeModel" style="float:left; cursor:pointer; " onclick="Rehref()">免费模板</p>
+            <p class="mouseHove" style="float:left; margin-left:30px; cursor:pointer;  " onclick="Myprogect()">我的作品</p>
+			
+			<div id=headXf style="display:none;">
+            <input id="createBtn" type="button" value="创作" onclick="ClickCreate()" style="float:left; margin-left:20px; width:80px; height:30px; margin-top:15px;  color:#fff; background-color:rgb(255, 134, 72); border:none;" />
+            </div>
+            
+            <font id="loginBtn" class="mouseHove" style="float:left; margin-left:50px; line-height:30px; width:50px; height:30px; margin-top:15px; border:none;  cursor:pointer; color:#f39800" onclick="ClickLogin()">登录</font>
+            <font id="sx" style="color:white; float:left; ">|</font>
+            <font id="regionBtn" class="mouseHove" style="float:left; line-height:30px; width:50px; height:30px; margin-top:15px; margin-left:20px; cursor:pointer" onclick="Clickregion()">注册</font>
+            <div id="headDiv" style="display:none;">
+                <img id="headImg" src="userHead/t.png" width="40" height="40" style="border-radius:40px; " alt="个人头像"/><br />
+                <div id="mylist" style="background-color:rgba(0,0,0,.5); border:none; border-radius:0px 0px 5px 5px; margin-top:1px;">
+                    <!--<font class="fontcolor">我的消息</font><br />  -->
+                    <font class="fontcolor" onclick="userCenter()">个人信息</font><br />
+                    <font id="out" class="fontcolor" onclick="out()">退出</font>
+                </div>
+            </div>
+            <!---鼠标经过显示动画下拉-->
+            
+        </section>
+    </section>
+</body>
+</html>

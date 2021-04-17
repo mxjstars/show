@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录页</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <link href="css/css.css" rel="stylesheet" />
+    <script>
+        //点击注册按钮
+        function Regist() {
+            //打开登录
+            window.parent.EjectIdent('Register.html', '', 500, 500);
+            //关闭本窗体
+            var close = $('#CloseCover', parent.document);
+            $('#coverDiv', parent.document).remove();
+            $(close).parent().parent().remove();
+
+        }
+        //点击登录按钮
+        function OnLogin() {
+            var UserName = $('#UserNameText').val();
+            var pwd = $('#pwdText').val();
+            var code = $('#codeText').val();
+            var pd = { t: "2", UserName: UserName, pwd: pwd, code: code };
+            $.ajax({
+                type: "post",
+                url: "loginOnTest.do",
+                data: pd,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == "0") {
+                        window.parent.location.href = 'index.html';
+                    }
+                    else {
+                        alert(data.status);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        function getkey() {
+            if (event.keyCode == 13) {
+                OnLogin();
+            }
+        }
+        //忘记密码
+        function respwd()
+        {
+            //打开登录
+            window.parent.EjectIdent('ResPwd.html', '', 500, 500);
+            //关闭本窗体
+            var close = $('#CloseCover', parent.document);
+            $('#coverDiv', parent.document).remove();
+            $(close).parent().parent().remove();
+        }
+        
+        
+    	//点击切换验证码
+    	function changeVerifyCode() {
+    		$("#yzmImg").attr("src",
+    				"../Kaptcha.jpg?" + Math.floor(Math.random() * 100));
+    	}
+    </script>
+</head>
+<body style="background-color:#f9f9f9;">
+    <div style="text-align:center; margin-top:50px;">
+        <img src="sysImg/logo.png" />
+    </div>
+    <hr style="height:1px; border:none; border-top:1px solid #eeeeee" />
+    <div style="width:260px; margin-left:auto; margin-right:auto; margin-top:15px;">
+        <input id="UserNameText" type="text" placeholder="请输入手机号或者邮箱" onkeypress="getkey()" style="width:260px; height:30px; font-size:14px; " /><br />
+        <input id="pwdText" type="password" placeholder="请输入密码" onkeypress="getkey()" style="margin-top:10px; width:260px; height:30px; font-size:14px;" /><br />
+        <input id="codeText" type="text" onkeypress="getkey()" placeholder="请输入验证码" style="margin-top:10px; width:150px; height:30px; font-size:14px;" />
+        
+        
+        <!--<img alt="看不清楚，换一张" style="float:right; margin-top:10px; height:35px; width:85px;  cursor:pointer;" src="Code.ashx" onclick="this.src='Code.ashx?abc='+Math.random()" />  -->
+        
+        <img src="../Kaptcha.jpg" id="yzmImg" onclick="changeVerifyCode()" title="刷新"><br />
+        
+        <input type="button" value="登录" onclick="OnLogin()" style="width:265px; margin-top:20px; height:30px; background-color:#f39800; border:none; color:white;  cursor:pointer;" />
+        <div style="margin-top:9px; font-size:13px; font-weight:600;">
+            <font style="color:rgb(170, 170, 170); ">还没账号？</font>
+            <font style="color:#f39800;  cursor:pointer;" onclick="Regist()">点击注册>></font>
+            <font style="color:#f39800; float:right; cursor:pointer; " onclick="respwd()">忘记密码？</font>
+        </div>
+        <div style="color:#f39800; margin:20px auto 0px auto; width:190px; font-size:13px;">
+            <hr style="height:1px; border:none; border-top:1px solid #eeeeee; width:50px; float:left; " />
+            <font style="float:left;"></font>
+            <hr style="height:1px; border:none; border-top:1px solid #eeeeee; width:50px; float:left;" />
+        </div>
+
+    </div>
+    <hr style="height:1px; border:none; border-top:1px solid #eeeeee; margin-top:110px;" />
+    <div style="float:right; color:rgb(128, 128, 128); font-size:12px">为了获得更好的使用，建议使用谷歌浏览器(chrome)</div>
+</body>
+</html>

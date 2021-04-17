@@ -1,0 +1,144 @@
+﻿<div class="dialog-contain "> 
+    <div class="dialog-head">  <h1 ng-if="type == 4">test</h1>  <h1 ng-if="type == 2">音乐素材</h1>     <p ng-show='selectSoundError'>
+            {{selectSoundError}}</p> 
+    </div>
+     
+    <div class="dialog-content bg_console clearfix" style="background-color:#E7E7E7;position:relative;"> 
+        <div ng-show="soundAction"
+             style="position:absolute;left:0;right:0;top:0;bottom:0;background-color:#000;z-index: 1;opacity: 0.2"> 
+        </div>
+         
+        <div class="sound-action-upload" ng-show="soundAction">  <p>
+            可以通过右侧“添加外链”或“上传”按钮上传您喜爱的音乐，上传的音乐将被保存至服务器中，您可以随时随地访问并使用它们请确保上传的文件大小不超过4m，格式为mp3 
+            请注意：文件大小会影响最终浏览效果，如果为了实现更加流畅的浏览和加载效果，请尽量减少文件大小。</p> 
+            <div class="know">  <input type="checkbox" ng-model="actionShow" ng-change="isCheckbox(actionShow)">不再提示 
+                <span style="position:relative;">                     <a class="btn-main">知道了</a>                     <input
+                        type="file" ng-click="closeAction()" nv-file-select="" uploader="uploader" multiple="multiple"
+                        style="width:90px;height: 35px;overflow: hidden;position: absolute;top:-10px;right: 0;left:10px;bottom:0;cursor: pointer;opacity:0;">                 </span> 
+            </div>
+             
+        </div>
+        
+		
+        <div class="fl" style="width:115px;"> 
+            <ul class="nav nav-tabs tabs-left" style="padding-top:0;"><!-- \'tabs-right\' for right tabs --> 
+                <li ng-class="{active: !isMySound}" ng-show="type == 2">  <a ng-click="selectTab(false)">音乐库</a> </li>
+                 
+                <li ng-class="{active: !isMySound}" ng-show="type == 4">  <a ng-click="selectTab(false)">音效库</a> </li>
+                 
+                <li ng-class="{active: isMySound}" ng-show="type == 2">  <a ng-click="selectTab(true)">我的音乐</a> </li>
+                 
+                <li ng-class="{active: isMySound}" ng-show="type == 4">  <a ng-click="selectTab(true)">我的音效</a> </li>
+                 
+                 
+                <li class="my-bg-upload"> 
+                    <div class="my-upload-action" ng-if="alertAction" ng-click="popSoundAction()"> </div>
+                     
+                    <div class="sound-upload form"> 
+                        <div class="form-menus"> 
+                            <div class="popover right"> 
+                                <div class="arrow"></div>
+                                 
+                                <div class="popover-content" style="font-size:12px;">  链接如何减少文件大小，请查看<a
+                                        style="padding:0;font-size:12px;display:inline;margin:0;height:20px;line-height:20px;border:none;color:#08a1ef!important"
+                                        href="http://www.48ym.com/forum.php?mod=viewthread&tid=7505" target="_blank">如何裁剪音乐</a> 
+                                </div>
+                                 
+                            </div>
+                             
+                        </div>
+                          <span class="eqf-upload"></span><em>上传</em>  
+						  <input type="file" nv-file-select=""
+                                                                                uploader="uploader" multiple="multiple"
+                                                                                style="width:200px;height: 55px;overflow: hidden;position: absolute;top: 0;right: 0;left:0;bottom:0;cursor: pointer;opacity:0;"> 
+                    </div>
+                     
+                </li>
+                 
+            </ul>
+             
+        </div>
+         
+        <div class="fl bg-rig" style="min-height:396px;"> 
+            <div> 
+                <audio style="margin: 25px 0 0 20px;height:30px;" eqx-audio></audio>
+                 
+                <div style="margin-left: 20px; font-size: 14px; width: 540px;height:40px;line-height:40px;overflow:hidden">
+                      <span ng-show="sound.name">已选择：{{sound.name | maxLength: 17}}                     <a
+                        class="eqf-no" style="margin-left: 20px;" title="清除"
+                        ng-click="clear()"></a>                 </span> 
+                </div>
+                 
+            </div>
+             
+            <div class="tab-content" id="bg_contain"> 
+                <div class="tab-pane tab-head active"> 
+                    <div class="tab-pane"> 
+                        <div class="img_list"> 
+                            <div class="sound-action" ng-show="actionContent">  <p>
+                                可以通过右侧“添加外链”或“上传”按钮上传您喜爱的音乐，上传的音乐将被保存至服务器中，您可以随时随地访问并使用它们<br/> 
+                                请确保上传的文件大小不超过4m，格式为mp3<br/> 
+                                请注意：文件大小会影响最终浏览效果，如果为了实现更加流畅的浏览和加载效果，请尽量减少文件大小。了解如何减少文件大小，请查看<a
+                                    href="http://www.48ym.com/forum.php?mod=viewthread&tid=7505"
+                                    target="_blank">如何裁剪音乐</a></p> 
+                            </div>
+                             
+                            <div class="sound-list clearfix" ng-show="!actionContent"> 
+                                <ul style="height:300px;overflow:hidden;"> 
+                                    <li style="cursor:pointer;" ng-class="{active: isSoundSelected(type, sound, s)}"
+                                        ng-click="selectSound(s,type, isSoundSelected(type, sound, s))"
+                                        ng-repeat="s in sounds"> 
+                                        <span>                                                                                      <a
+                                                class="sound eqf-play" title="{{s.isPlaying ? '暂停' : '播放'}}"
+                                                ng-class="{'eqf-play': !s.isPlaying, 'eqf-stop': s.isPlaying}"
+                                                ng-click="playSound($event, $index)"></a>                                            <a
+                                                class="del eqf-no" title="删除" ng-show="isMySound"
+                                                ng-click="deleteMySound($event, $index)"></a>                                        </span> 
+                                        <div class="linkName" title="{{s.name}}">{{s.name}}<em
+                                                style="padding-left:10px;" class="eqf-link3" ng-show="s.isValue"></em>
+                                        </div>
+                                         
+                                    </li>
+                                     
+                                </ul>
+                                 
+                            </div>
+                             
+                        </div>
+                         
+                    </div>
+                     
+                </div>
+                 
+                <div class="img_list " style="padding-top:0;"> 
+                    <div class="fanye_foot sound-pagination clearfix"> 
+                        <div class="pagination_container fl" ng-show="pagination.totalItems > 10"> 
+                            <pagination style="float: left" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                        first-text="首页" last-text="尾页" max-size="5" items-per-page="pagination.pageSize"
+                                        total-items="pagination.totalItems" ng-model="pagination.currentPage"
+                                        ng-change="getSounds(pagination.currentPage)" boundary-links="true"
+                                        rotate="true" num-pages="pagination.numPages"></pagination>
+                             
+                            <div class="current_page">  <input type="text" ng-model="toPage"
+                                                                ng-keyup="$event.keyCode == 13 ? getSounds(toPage) : null"> 
+                                <a ng-click="getSounds(toPage)" class="go">GO</a>  <span>当前: {{pagination.currentPage}} / {{pagination.numPages}} 页</span> 
+                            </div>
+                             
+                        </div>
+                         
+                        <div style="text-align:right;">  <a class="btn-grey0" ng-click="cancel()"
+                                                             style="margin-right:10px;">取消</a>  <a class="btn-main"
+                                                                                                    ng-click="ok()">确定</a> 
+                        </div>
+                         
+                    </div>
+                     
+                </div>
+                 
+            </div>
+             
+        </div>
+         
+    </div>
+     
+</div>

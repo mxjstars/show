@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mingrisoft.dao.TbScenePagMapper">
+	<resultMap id="BaseResultMap" type="com.mingrisoft.model.TbScenePag">
+		<id column="scene_pag_id" property="scenePagId" jdbcType="INTEGER" />
+		<result column="flip_code_id" property="flipCodeId" jdbcType="INTEGER" />
+		<result column="num" property="num" jdbcType="INTEGER" />
+		<result column="scene_code" property="sceneCode" jdbcType="VARCHAR" />
+		<result column="pageName" property="pagename" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.mingrisoft.model.TbScenePag"
+		extends="BaseResultMap">
+		<result column="content_text" property="contentText" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		scene_pag_id, flip_code_id, num, scene_code, pageName
+	</sql>
+	<sql id="Blob_Column_List">
+		content_text
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tb_scene_pag
+		where scene_pag_id = #{scenePagId,jdbcType=INTEGER}
+	</select>
+	<select id="selectBySceneCode" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tb_scene_pag
+		where scene_code = #{sceneCode,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_scene_pag
+		where scene_pag_id = #{scenePagId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.mingrisoft.model.TbScenePag">
+		insert into tb_scene_pag (scene_pag_id, flip_code_id, num,
+		scene_code, pageName, content_text
+		)
+		values (#{scenePagId,jdbcType=INTEGER}, #{flipCodeId,jdbcType=INTEGER},
+		#{num,jdbcType=INTEGER},
+		#{sceneCode,jdbcType=VARCHAR}, #{pagename,jdbcType=VARCHAR}, #{contentText,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.mingrisoft.model.TbScenePag">
+		insert into tb_scene_pag
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="scenePagId != null">
+				scene_pag_id,
+			</if>
+			<if test="flipCodeId != null">
+				flip_code_id,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="sceneCode != null">
+				scene_code,
+			</if>
+			<if test="pagename != null">
+				pageName,
+			</if>
+			<if test="contentText != null">
+				content_text,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="scenePagId != null">
+				#{scenePagId,jdbcType=INTEGER},
+			</if>
+			<if test="flipCodeId != null">
+				#{flipCodeId,jdbcType=INTEGER},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=INTEGER},
+			</if>
+			<if test="sceneCode != null">
+				#{sceneCode,jdbcType=VARCHAR},
+			</if>
+			<if test="pagename != null">
+				#{pagename,jdbcType=VARCHAR},
+			</if>
+			<if test="contentText != null">
+				#{contentText,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.mingrisoft.model.TbScenePag">
+		update tb_scene_pag
+		<set>
+			<if test="flipCodeId != null">
+				flip_code_id = #{flipCodeId,jdbcType=INTEGER},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=INTEGER},
+			</if>
+			<if test="sceneCode != null">
+				scene_code = #{sceneCode,jdbcType=VARCHAR},
+			</if>
+			<if test="pagename != null">
+				pageName = #{pagename,jdbcType=VARCHAR},
+			</if>
+			<if test="contentText != null">
+				content_text = #{contentText,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where scene_pag_id = #{scenePagId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mingrisoft.model.TbScenePag">
+		update tb_scene_pag
+		set flip_code_id = #{flipCodeId,jdbcType=INTEGER},
+		num = #{num,jdbcType=INTEGER},
+		scene_code = #{sceneCode,jdbcType=VARCHAR},
+		pageName = #{pagename,jdbcType=VARCHAR},
+		content_text = #{contentText,jdbcType=LONGVARCHAR}
+		where scene_pag_id = #{scenePagId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.mingrisoft.model.TbScenePag">
+		update tb_scene_pag
+		set flip_code_id = #{flipCodeId,jdbcType=INTEGER},
+		num = #{num,jdbcType=INTEGER},
+		scene_code = #{sceneCode,jdbcType=VARCHAR},
+		pageName = #{pagename,jdbcType=VARCHAR}
+		where scene_pag_id = #{scenePagId,jdbcType=INTEGER}
+	</update>
+
+
+	<select id="queryTempList" resultMap="ResultMapWithBLOBs"
+		parameterType="com.mingrisoft.model.TbScenePag">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tb_scene_pag
+		<where>
+			(1=1)
+			<if test="scenePagId!=null and scenePagId!=''">
+				and scene_pag_id = #{scenePagId,jdbcType=INTEGER}
+			</if>
+			<if test="sceneCode!=null and sceneCode!=''">
+				and scene_code = #{sceneCode,jdbcType=INTEGER}
+			</if>
+		</where>
+		order by num asc
+	</select>
+</mapper>
